@@ -14,99 +14,53 @@
 *Objetivo: Ambiente local impecável, zero risco de exposição de credenciais*
 
 ### 1.1 Inicialização do Projeto Next.js
-- [ ] Criar projeto Next.js 15 com TypeScript: `npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias "@/*"`
-- [ ] Confirmar estrutura de pastas gerada (`app/`, `components/`, `lib/`, `public/`)
-- [ ] Instalar dependências adicionais:
-  - [ ] `framer-motion` — animações
-  - [ ] `@react-three/fiber` + `@react-three/drei` + `three` — 3D Hero
-  - [ ] `react-hook-form` + `zod` + `@hookform/resolvers` — formulário
-  - [ ] `@supabase/supabase-js` — client Supabase
-  - [ ] `resend` — SDK de email (server-side)
-  - [ ] `lucide-react` — ícones
-  - [ ] `react-email` + `@react-email/components` — templates de email
-- [ ] Verificar `package.json` e `package-lock.json` gerados corretamente
+- [x] Criar projeto Next.js 15 com TypeScript: `pnpm create next-app@latest` (Next.js 16.2.2 instalado via pnpm)
+- [x] Confirmar estrutura de pastas gerada (`app/`, `components/`, `lib/`, `public/`)
+- [x] Instalar dependências adicionais:
+  - [x] `framer-motion` — animações
+  - [x] `@react-three/fiber` + `@react-three/drei` + `three` + `@types/three` — 3D Hero
+  - [x] `react-hook-form` + `zod` + `@hookform/resolvers` — formulário
+  - [x] `@supabase/supabase-js` — client Supabase
+  - [x] `resend` — SDK de email (server-side)
+  - [x] `lucide-react` — ícones
+  - [x] `react-email` + `@react-email/components` — templates de email
+- [x] Verificar `package.json` e `pnpm-lock.yaml` gerados corretamente
 
 ### 1.2 Configuração do .gitignore
-- [ ] Garantir que o `.gitignore` bloqueie **absolutamente**:
-  - [ ] `.env` / `.env.local` / `.env.*.local` / `.env.production`
-  - [ ] `*.pem`, `*.key`, `*.cert`
-  - [ ] `.vercel/` (pode conter tokens)
-  - [ ] `node_modules/`
-  - [ ] `.next/` (build artifacts)
-  - [ ] `out/` (static export)
-  - [ ] Arquivos de OS: `.DS_Store`, `Thumbs.db`
-  - [ ] Logs: `*.log`, `npm-debug.log*`
-- [ ] **Verificar manualmente** que nenhum arquivo sensível está staged antes do primeiro commit
+- [x] Garantir que o `.gitignore` bloqueie **absolutamente**:
+  - [x] `.env` / `.env.local` / `.env.*.local` / `.env.production`
+  - [x] `*.pem`, `*.key`, `*.cert`
+  - [x] `.vercel/` (pode conter tokens)
+  - [x] `node_modules/`
+  - [x] `.next/` (build artifacts)
+  - [x] `out/` (static export)
+  - [x] Arquivos de OS: `.DS_Store`, `Thumbs.db`
+  - [x] Logs: `*.log`, `npm-debug.log*`
+- [x] **Verificar manualmente** que nenhum arquivo sensível está staged antes do primeiro commit
 
 ### 1.3 Variáveis de Ambiente
-- [ ] Criar `.env.example` com todas as variáveis necessárias (valores em branco/placeholder):
-  ```
-  NEXT_PUBLIC_SUPABASE_URL=
-  NEXT_PUBLIC_SUPABASE_ANON_KEY=
-  SUPABASE_SERVICE_ROLE_KEY=
-  RESEND_API_KEY=
-  N8N_WEBHOOK_SECRET=
-  N8N_LEAD_WEBHOOK_URL=
-  NEXT_PUBLIC_SITE_URL=
-  ```
-- [ ] Criar `.env.local` local com valores reais (NUNCA commitar)
-- [ ] Validar que `.env.local` está no `.gitignore` ANTES de preencher valores
-- [ ] Testar `git status` para confirmar que `.env.local` não aparece como untracked
+- [x] Criar `.env.example` com todas as variáveis necessárias (valores em branco/placeholder)
+- [ ] Criar `.env.local` local com valores reais (NUNCA commitar) — pendente: aguarda credenciais
+- [x] Validar que `.env.local` está no `.gitignore` ANTES de preencher valores
+- [x] Testar `git status` para confirmar que `.env.local` não aparece como untracked
 
 ### 1.4 Estrutura de Pastas
-- [ ] Organizar estrutura final:
-  ```
-  app/
-    layout.tsx          — Root layout (fontes, metadata global)
-    page.tsx            — Home page
-    legal/
-      page.tsx          — Página legal (migrada do legal.html)
-    api/
-      leads/
-        route.ts        — POST endpoint de captura de lead
-      health/
-        route.ts        — GET health check
-  components/
-    layout/
-      Nav.tsx
-      Footer.tsx
-    sections/
-      Hero.tsx
-      Sobre.tsx
-      Servicos.tsx
-      Processo.tsx
-      Cases.tsx
-      CTABand.tsx
-      Contato.tsx
-    ui/
-      Button.tsx
-      Card.tsx
-      Input.tsx
-      Badge.tsx
-      GlowBorder.tsx
-    three/
-      ParticleField.tsx — Componente 3D isolado (lazy-loaded)
-  lib/
-    supabase/
-      client.ts         — Supabase browser client
-      server.ts         — Supabase server client (service role)
-    validations/
-      lead.ts           — Zod schema do lead
-    utils.ts
-  emails/
-    LeadWelcome.tsx
-    LeadInternal.tsx
-  public/
-    (assets migrados do site atual)
-  ```
-- [ ] Mover assets (Logo, imagens) de `assets/` e `Logo/` para `public/`
-- [ ] Commit inicial limpo: `feat: scaffold Next.js 15 project structure`
+- [x] Organizar estrutura final (app/, components/, lib/, emails/, public/)
+- [x] `app/layout.tsx` — fontes Orbitron + Rajdhani via next/font, metadata PT-BR
+- [x] `app/globals.css` — design system: tokens Tailwind v4, glassmorphism, keyframes, scrollbar
+- [x] `app/page.tsx` — scaffold da home (seções implementadas na Fase 2)
+- [x] `app/api/leads/route.ts` — POST com Zod + Supabase server + n8n webhook via `after()`
+- [x] `app/api/health/route.ts` — GET health check
+- [x] `lib/supabase/client.ts` — browser client (anon key)
+- [x] `lib/supabase/server.ts` — server client (service role, server-side only)
+- [x] `lib/validations/lead.ts` — Zod schema completo do lead
+- [ ] Mover assets (Logo, imagens) de `assets/` e `Logo/` para `public/` — pendente Fase 2
+- [x] Commit da Fase 1
 
 ### 1.5 Verificação Final da Fase 1
-- [ ] Rodar `npm run dev` — aplicação sobe sem erros
-- [ ] Rodar `git status` — nenhum arquivo `.env*` aparece
-- [ ] Rodar `git log` — commit inicial registrado
-- [ ] **Cheklist de segurança**: abrir `.gitignore` e confirmar visualmente cada linha crítica
+- [x] Rodar `pnpm run build` — build passou sem erros (Next.js 16.2.2, Turbopack)
+- [x] Rodar `git status` — nenhum arquivo `.env*` aparece
+- [x] **Checklist de segurança**: `.gitignore` confirmado visualmente
 
 ---
 
@@ -114,109 +68,110 @@
 *Objetivo: Experiência visual nível Awwwards, fiel ao brand Marktracking*
 
 ### 2.1 Design System Global
-- [ ] Configurar `tailwind.config.ts` com tokens de design completos:
-  - [ ] Cores: `neon-green`, `neon-blue`, `dark-bg`, `dark-surface`, variações de opacidade
-  - [ ] Fontes: Orbitron + Rajdhani via `next/font/google`
-  - [ ] Animações custom: float, pulse-glow, shimmer, scan-line
-  - [ ] Border radius, shadows, blur values padronizados
-- [ ] Criar `app/globals.css` com:
-  - [ ] CSS reset e base styles
-  - [ ] Glassmorphism utility classes
-  - [ ] Cursor customizado (dot + lag via JS)
-  - [ ] Scrollbar estilizada
-  - [ ] Selection color customizada
+- [x] Configurar tokens de design completos (Tailwind v4 usa `@theme` em `globals.css` — sem `tailwind.config.ts`):
+  - [x] Cores: `neon-green`, `neon-blue`, `dark-bg`, `dark-surface`, variações de opacidade
+  - [x] Fontes: Orbitron + Rajdhani via `next/font/google`
+  - [x] Animações custom: float, pulse-glow, shimmer, glitch, scan-line
+  - [x] Border radius, shadows, blur values padronizados
+- [x] `app/globals.css` completo com:
+  - [x] CSS reset e base styles
+  - [x] Glassmorphism utility classes (.glass, .glass-nav)
+  - [x] Cursor customizado (dot + lag via JS — CustomCursor.tsx)
+  - [x] Scrollbar estilizada
+  - [x] Selection color customizada
 
 ### 2.2 Layout Base
-- [ ] `app/layout.tsx`:
-  - [ ] Metadata global (title, description, OG, Twitter Card)
-  - [ ] Fontes via `next/font` (sem CLS)
-  - [ ] Vercel Analytics (`<Analytics />`)
-  - [ ] Root structure com `<Nav>` e `<Footer>`
-- [ ] `components/layout/Nav.tsx`:
-  - [ ] Fixed + glassmorphism blur progressivo no scroll
-  - [ ] Logo com glow effect
-  - [ ] Menu desktop com underline hover animado
-  - [ ] Mobile: hamburger → menu overlay com animação
-  - [ ] CTA button "Contato" com border glow
-- [ ] `components/layout/Footer.tsx`:
-  - [ ] Links internos, redes sociais, legal
-  - [ ] Crédito e ano dinâmico
+- [x] `app/layout.tsx`:
+  - [x] Metadata global (title, description, OG, Twitter Card)
+  - [x] Fontes via `next/font` (sem CLS)
+  - [ ] Vercel Analytics (`<Analytics />`) — pendente: instalar @vercel/analytics
+  - [x] Root structure com `<Nav>`, `<Footer>` e `<CustomCursor>`
+- [x] `components/layout/Nav.tsx`:
+  - [x] Fixed + glassmorphism blur progressivo no scroll
+  - [x] Logo "MT / MARKTRACKING" com glow effect
+  - [x] Menu desktop com underline hover animado (CSS scale)
+  - [x] Mobile: hamburger → menu overlay com animação (framer-motion stagger)
+  - [x] CTA button "Falar Agora" com border glow
+- [x] `components/layout/Footer.tsx`:
+  - [x] Links internos, redes sociais, legal
+  - [x] Crédito e ano dinâmico
 
 ### 2.3 Seção Hero
-- [ ] `components/sections/Hero.tsx`:
-  - [ ] Fullscreen (100svh)
-  - [ ] `components/three/ParticleField.tsx` — campo de partículas 3D lazy-loaded
-    - [ ] Partículas conectadas reagindo ao cursor (mouse tracking)
-    - [ ] Performance: máximo 60fps, LOD em mobile (menos partículas)
-  - [ ] Headline principal com efeito glitch sutil (CSS animation)
-  - [ ] Subheadline com typing effect ou reveal stagger
-  - [ ] 2 CTAs: "Falar com especialista" (primary) + "Ver serviços" (ghost)
-  - [ ] Scroll indicator animado (chevron bounce)
+- [x] `components/sections/Hero.tsx`:
+  - [x] Fullscreen (100svh)
+  - [x] `components/three/ParticleField.tsx` — campo de partículas 3D lazy-loaded (next/dynamic ssr:false)
+    - [x] Partículas conectadas reagindo ao cursor (mouse repulsion)
+    - [x] Performance: máximo 60fps, LOD em mobile (60 vs 150 partículas), DynamicDrawUsage
+  - [x] Headline principal com efeito glitch sutil (animate-glitch CSS)
+  - [x] Subheadline com reveal stagger (framer-motion variants)
+  - [x] 2 CTAs: "Falar com Especialista" (primary) + "Ver Serviços" (ghost)
+  - [x] Scroll indicator animado (chevron framer-motion keyframe loop)
 - [ ] Testar performance Hero isolado: sem layout shift, FPS estável
 
 ### 2.4 Seção Sobre
-- [ ] `components/sections/Sobre.tsx`:
-  - [ ] Split layout: texto à esquerda, stats/visual à direita
-  - [ ] Animated counters (0 → valor) quando entram em viewport
-  - [ ] 3-4 diferenciais com ícones e micro-animação de entrada
-  - [ ] Framer Motion `viewport` trigger para cada bloco
+- [x] `components/sections/Sobre.tsx`:
+  - [x] Split layout: texto à esquerda, stats 2x2 à direita
+  - [x] Animated counters (0 → valor) quando entram em viewport (rAF ease-out)
+  - [x] 3 diferenciais com ícones (CheckCircle, Zap, Shield) e stagger de entrada
+  - [x] Framer Motion `useInView` viewport trigger para cada bloco
 
 ### 2.5 Seção Serviços
-- [ ] `components/sections/Servicos.tsx`:
-  - [ ] Grid 2x3 (desktop) / 1x6 (mobile) de cards
-  - [ ] Cada card: glassmorphism + conic-gradient border no hover
-  - [ ] Ícone animado, título, descrição curta, tag de tecnologia
-  - [ ] Serviços: DevOps, Tracking Setup, Growth Analytics, Data Layer, Tag Management, Performance Audit
-  - [ ] Stagger reveal no scroll
+- [x] `components/sections/Servicos.tsx`:
+  - [x] Grid 1x6 (mobile) / 2x3 (tablet) / 2x3 (desktop) de cards
+  - [x] Cada card: glassmorphism + border glow colorido no hover (green/blue)
+  - [x] Ícone, título, descrição curta, tag de tecnologia
+  - [x] 6 serviços: DevOps, Tracking Setup, Growth Analytics, Data Layer, Tag Management, Performance Audit
+  - [x] Stagger reveal no scroll (custom delay por index)
 
 ### 2.6 Seção Processo
-- [ ] `components/sections/Processo.tsx`:
-  - [ ] Timeline horizontal (desktop) / vertical (mobile)
-  - [ ] 4 etapas: Diagnóstico → Arquitetura → Implementação → Monitoramento
-  - [ ] Linha de progresso animada conectando as etapas
-  - [ ] Números grandes com glow + descrição por etapa
+- [x] `components/sections/Processo.tsx`:
+  - [x] Timeline horizontal (desktop) / vertical (mobile)
+  - [x] 4 etapas: Diagnóstico → Arquitetura → Implementação → Monitoramento
+  - [x] Linha de progresso animada (scaleX 0→1 no viewport)
+  - [x] Números grandes com glow + descrição por etapa
 
 ### 2.7 Seção Cases / Números
-- [ ] `components/sections/Cases.tsx`:
-  - [ ] 3-4 métricas de impacto (ex: "+340% ROAS", "0 dados perdidos")
-  - [ ] Animated number counters
-  - [ ] Mini-cases ou logos de clientes (se disponível)
+- [x] `components/sections/Cases.tsx`:
+  - [x] 4 métricas de impacto: +340% ROAS, 0 dados perdidos, 48h deploy, 100% LGPD
+  - [x] Animated number counters (rAF ease-out cubic)
+  - [x] Testimonial card com quote e atribuição
 
 ### 2.8 CTA Band
-- [ ] `components/sections/CTABand.tsx`:
-  - [ ] Banner full-width com gradiente dark + acento neon
-  - [ ] Headline de urgência + sub
-  - [ ] Botão CTA com shimmer + ripple
+- [x] `components/sections/CTABand.tsx`:
+  - [x] Banner full-width com gradiente dark + glow neon radial
+  - [x] Headline de urgência + sub
+  - [x] Botão CTA com shimmer animado (bg-position) + framer-motion spring
 
 ### 2.9 Seção Contato / Formulário
-- [ ] `components/sections/Contato.tsx`:
-  - [ ] Formulário completo (React Hook Form + Zod):
-    - [ ] Campos: Nome*, Email*, Empresa, Cargo, Telefone, Serviço de interesse, Mensagem*
-    - [ ] Checkbox de consentimento LGPD obrigatório
-    - [ ] UTM parameters capturados automaticamente do URL (via `useSearchParams`)
-  - [ ] Inputs com floating label + glow on focus
-  - [ ] Validação em tempo real com feedback visual
-  - [ ] Estado de loading (spinner + texto animado)
-  - [ ] Estado de sucesso (animação de confirmação)
-  - [ ] Estado de erro (mensagem clara + retry)
+- [x] `components/sections/Contato.tsx`:
+  - [x] Formulário completo (React Hook Form + zodResolver):
+    - [x] Campos: Nome*, Email*, Empresa, Cargo, Telefone, Serviço, Mensagem*
+    - [x] Checkbox de consentimento LGPD obrigatório
+    - [x] UTM parameters capturados via `useSearchParams` (com Suspense boundary)
+  - [x] Inputs com floating label + glow on focus (Input.tsx)
+  - [x] Validação em tempo real com feedback visual por campo
+  - [x] Estado de loading (spinner + "Enviando...")
+  - [x] Estado de sucesso (animação framer-motion scale)
+  - [x] Estado de erro (banner + "Tentar novamente")
 
 ### 2.10 Componentes UI
-- [ ] `components/ui/Button.tsx` — variantes: primary, ghost, danger + ripple effect
-- [ ] `components/ui/Card.tsx` — glassmorphism base reutilizável
-- [ ] `components/ui/Input.tsx` — floating label + glow + error state
-- [ ] `components/ui/Badge.tsx` — pill com cor customizável
-- [ ] `components/ui/GlowBorder.tsx` — wrapper com border animado
+- [x] `components/ui/Button.tsx` — variantes: primary, ghost, danger + ripple effect + framer-motion
+- [x] `components/ui/Card.tsx` — glassmorphism base reutilizável
+- [x] `components/ui/Input.tsx` — floating label + glow + error state
+- [x] `components/ui/Badge.tsx` — pill com cor customizável (green/blue/white)
+- [x] `components/ui/GlowBorder.tsx` — wrapper com gradient border animado
 
 ### 2.11 Cursor Customizado
-- [ ] `components/ui/CustomCursor.tsx`:
-  - [ ] Dot pequeno que segue o cursor (lag suave via lerp)
-  - [ ] Ring externo com delay maior
-  - [ ] Esconde cursor nativo do OS
-  - [ ] Escala em hover de elementos interativos
-  - [ ] Desabilitado em mobile (touch devices)
+- [x] `components/ui/CustomCursor.tsx`:
+  - [x] Dot pequeno que segue o cursor instantaneamente (ref direto, sem state)
+  - [x] Ring externo com lag suave (lerp factor 0.12 via rAF)
+  - [x] Esconde cursor nativo do OS (cursor: none em globals.css)
+  - [x] Escala 2x em hover de elementos interativos
+  - [x] Retorna null em touch devices (pointer: coarse)
 
 ### 2.12 Verificação Final da Fase 2
-- [ ] Rodar `npm run dev` — todas as seções renderizando sem erros
+- [x] `pnpm run build` — build passou sem erros TypeScript (16.2.2 Turbopack)
+- [ ] Rodar `pnpm dev` — todas as seções renderizando sem erros visuais
 - [ ] Testar em mobile (375px) e desktop (1440px)
 - [ ] Rodar Lighthouse: Performance ≥ 85, Accessibility ≥ 90
 - [ ] Nenhum console error / warning crítico
@@ -410,8 +365,8 @@
 
 | Fase | Status | Conclusão |
 |---|---|---|
-| Fase 1 — Setup Hermético | `[ ]` Pendente | — |
-| Fase 2 — Frontend Wow-Factor | `[ ]` Pendente | — |
+| Fase 1 — Setup Hermético | `[x]` Concluído | 2026-04-04 |
+| Fase 2 — Frontend Wow-Factor | `[~]` Implementado (validação visual pendente) | 2026-04-04 |
 | Fase 3 — Supabase + Datalayer | `[ ]` Pendente | — |
 | Fase 4 — n8n + Resend | `[ ]` Pendente | — |
 | Fase 5 — Auditoria + Build | `[ ]` Pendente | — |
