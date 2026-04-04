@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Marktracking Performance Solutions - DevOps, Tracking e Growth integrados para produtos digitais.">
+    <title>MARKTRACKING | Performance Solutions</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-green': '#00ff9d',
+                        'neon-blue': '#00f0ff',
+                        'dark-bg': '#050505',
+                        'dark-surface': '#0a0a0a',
+                    },
+                    fontFamily: {
+                        heading: ['Orbitron', 'sans-serif'],
+                        body: ['Rajdhani', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 20s infinite linear',
+                        'spin-slow': 'spin 10s linear infinite',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translate(-50%, -50%) rotate(0deg) scale(1)' },
+                            '50%': { transform: 'translate(-50%, -50%) rotate(5deg) scale(1.05)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 5px rgba(0, 255, 157, 0.5))' },
+                            '50%': { filter: 'drop-shadow(0 0 15px rgba(0, 255, 157, 0.8))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-dark-bg text-gray-200 font-body overflow-x-hidden relative">
+
+    <!-- Background Canvas (único) -->
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-20 opacity-40 pointer-events-none"></canvas>
+
+    <!-- Floating Logo Background -->
+    <div
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] max-w-4xl -z-30 opacity-5 pointer-events-none animate-float">
+        <img src="./Logo/Logo/Logo com slogan/Colorido/PNG/Prancheta 1.png" alt="Background Logo Mark"
+            class="w-full h-auto block">
+    </div>
+
+    <!-- Navigation -->
+    <nav
+        class="fixed w-full top-0 z-50 px-6 py-4 flex justify-between items-center bg-dark-bg/90 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <div class="logo-container flex items-center gap-2">
+            <img src="./Logo/Logo/Logo com slogan/Colorido/PNG/Prancheta 1.png" alt="Marktracking Logo"
+                class="h-12 md:h-14 hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_5px_rgba(0,240,255,0.5)]">
+            <span class="hidden md:inline text-xs tracking-[0.25em] uppercase text-zinc-400 font-heading">
+                Marktracking Performance Solutions
+            </span>
+        </div>
+
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex gap-8 list-none items-center">
+            <li>
+                <a href="#hero"
+                    class="text-white hover:text-neon-green transition-colors text-sm font-medium tracking-wide relative group">
+                    Home
+                    <span
+                        class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-neon-green transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#sobre"
+                    class="text-white hover:text-neon-green transition-colors text-sm font-medium tracking-wide relative group">
+                    Sobre
+                    <span
+                        class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-neon-green transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#servicos"
+                    class="text-white hover:text-neon-green transition-colors text-sm font-medium tracking-wide relative group">
+                    Serviços
+                    <span
+                        class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-neon-green transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#processo"
+                    class="text-white hover:text-neon-green transition-colors text-sm font-medium tracking-wide relative group">
+                    Processo
+                    <span
+                        class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-neon-green transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#cases"
+                    class="text-white hover:text-neon-green transition-colors text-sm font-medium tracking-wide relative group">
+                    Casos
+                    <span
+                        class="absolute bottom-[-5px] left-0 w-0 h-[2px] bg-neon-green transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#contato"
+                    class="text-neon-blue border border-neon-blue px-6 py-2 rounded text-sm font-medium tracking-wide
+                  hover:bg-neon-blue hover:text-black hover:shadow-[0_0_15px_rgba(0,240,255,0.5)] transition-all duration-300">
+                    Contato
+                </a>
+            </li>
+        </ul>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden hamburger cursor-pointer z-50 space-y-1.5 group">
+            <div class="line1 w-8 h-0.5 bg-white transition-all duration-300"></div>
+            <div class="line2 w-8 h-0.5 bg-white transition-all duration-300"></div>
+            <div class="line3 w-8 h-0.5 bg-white transition-all duration-300"></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <ul
+        class="nav-links fixed top-0 right-0 h-screen w-full bg-dark-bg/95 flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-300 md:hidden z-40">
+        <li><a href="#hero" class="text-2xl text-white hover:text-neon-green font-medium">Home</a></li>
+        <li><a href="#sobre" class="text-2xl text-white hover:text-neon-green font-medium">Sobre</a></li>
+        <li><a href="#servicos" class="text-2xl text-white hover:text-neon-green font-medium">Serviços</a></li>
+        <li><a href="#contato"
+                class="text-2xl text-neon-blue border border-neon-blue px-8 py-3 rounded hover:bg-neon-blue hover:text-black">
+                Contato
+            </a>
+        </li>
+    </ul>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center px-6 md:px-12">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 fade-in-element">
+                <p class="text-xs md:text-sm uppercase tracking-[0.2em] text-neon-green font-heading">
+                    DevOps • Tracking • Growth
+                </p>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white leading-tight">
+                    Infra, tracking e growth<br class="hidden md:block">
+                    na mesma esteira de deploy.
+                </h1>
+                <p class="text-lg text-zinc-300 max-w-xl">
+                    DevOps, observabilidade e marketing pensados como um só sistema —
+                    pra você testar, medir e escalar sem achismo.
+                </p>
+                <ul class="space-y-2 text-zinc-300 text-base">
+                    <li>• Arquitetura, automação e monitoramento da sua stack</li>
+                    <li>• Instrumentação completa de eventos, funis e receita</li>
+                    <li>• Growth guiado por dados, não por “opinião mais alta da sala”</li>
+                </ul>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#contato" class="inline-flex items-center justify-center px-6 py-3 rounded border border-neon-green text-neon-green
+                    font-semibold uppercase tracking-wide text-sm hover:bg-neon-green hover:text-black
+                    hover:shadow-[0_0_20px_#00ff9d] transition-all duration-300">
+                        Marcar uma call de 30 minutos
+                    </a>
+                    <a href="#cases" class="inline-flex items-center justify-center px-6 py-3 rounded border border-white/20 text-zinc-200
+                    font-semibold uppercase tracking-wide text-sm hover:bg-white/10 hover:border-neon-blue
+                    hover:text-neon-blue transition-all duration-300">
+                        Ver casos & experimentos
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visual do Hero -->
+            <div class="relative fade-in-element">
+                <div class="relative w-full max-w-md mx-auto aspect-square rounded-3xl border border-white/10 bg-white/5 backdrop-blur
+                 shadow-[0_0_40px_rgba(0,0,0,0.6)] overflow-hidden">
+                    <!-- Círculo central -->
+                    <div
+                        class="absolute inset-6 rounded-3xl bg-gradient-to-br from-neon-blue/10 via-dark-bg to-neon-green/10">
+                    </div>
+
+                    <!-- Nós do fluxo -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="grid grid-cols-2 gap-6 w-[80%]">
+                            <div
+                                class="p-3 rounded-xl bg-black/40 border border-neon-blue/40 text-xs text-zinc-200 flex flex-col gap-1 animate-pulse-glow">
+                                <span
+                                    class="text-[10px] uppercase tracking-[0.2em] text-neon-blue font-heading">Código</span>
+                                <span class="font-semibold">Repos & Features</span>
+                            </div>
+                            <div
+                                class="p-3 rounded-xl bg-black/40 border border-neon-green/40 text-xs text-zinc-200 flex flex-col gap-1">
+                                <span
+                                    class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">CI/CD</span>
+                                <span class="font-semibold">Pipelines & Deploys</span>
+                            </div>
+                            <div
+                                class="p-3 rounded-xl bg-black/40 border border-white/20 text-xs text-zinc-200 flex flex-col gap-1">
+                                <span
+                                    class="text-[10px] uppercase tracking-[0.2em] text-neon-blue font-heading">Tracking</span>
+                                <span class="font-semibold">Eventos & Funis</span>
+                            </div>
+                            <div
+                                class="p-3 rounded-xl bg-black/40 border border-white/20 text-xs text-zinc-200 flex flex-col gap-1">
+                                <span
+                                    class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">Growth</span>
+                                <span class="font-semibold">MRR & Receita</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anel girando -->
+                    <div
+                        class="absolute inset-3 rounded-3xl border border-neon-green/30 animate-spin-slow pointer-events-none">
+                    </div>
+                    <div class="absolute inset-10 rounded-full border border-neon-blue/20 animate-spin-slow pointer-events-none"
+                        style="animation-direction: reverse;"></div>
+                </div>
+                <p class="mt-4 text-xs text-zinc-500 text-center">
+                    Um fluxo único: do commit ao faturamento.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="py-24 px-6 md:px-12">
+        <div class="mx-auto max-w-6xl">
+            <div class="mb-12 fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">Quem está por trás</h3>
+                <h2 class="text-4xl md:text-5xl font-heading font-bold text-white relative inline-block">
+                    Um dev obcecado por
+                    <span class="text-neon-blue drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">stack, dados</span>
+                    e resultado.
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div
+                    class="glass-card p-8 rounded-xl bg-white/5 backdrop-blur border border-white/5 hover:border-neon-blue/30 hover:shadow-[0_0_20px_rgba(0,240,255,0.1)] transition-all duration-300 fade-in-element">
+                    <p class="text-lg mb-6 leading-relaxed">
+                        Sou desenvolvedor especializado em
+                        <strong class="text-neon-green">DevOps</strong> e
+                        <strong class="text-neon-green">trackeamento avançado</strong>.
+                        Meu trabalho é alinhar infraestrutura, coleta de dados e crescimento
+                        para que as decisões deixem de ser chute bem-intencionado.
+                    </p>
+                    <p class="text-lg mb-8 leading-relaxed">
+                        Em vez de entregar só dashboards bonitos, eu desenho o sistema que
+                        garante que cada evento importante seja capturado, entendido e usado:
+                        da configuração de servidores e pipelines ao pixel, data layer e
+                        integrações com CRM, gateway e plataformas de anúncio.
+                    </p>
+
+                    <div class="flex justify-between border-t border-white/10 pt-8 flex-wrap gap-4">
+                        <div class="text-center flex-1 min-w-[100px]">
+                            <span class="text-3xl md:text-4xl font-bold font-heading text-neon-blue block">+X</span>
+                            <span class="text-xs text-gray-500 uppercase tracking-[0.18em]">Anos construindo produtos
+                                digitais</span>
+                        </div>
+                        <div class="text-center flex-1 min-w-[100px]">
+                            <span class="text-3xl md:text-4xl font-bold font-heading text-neon-blue block">+Y</span>
+                            <span class="text-xs text-gray-500 uppercase tracking-[0.18em]">Stacks diferentes em
+                                produção</span>
+                        </div>
+                        <div class="text-center flex-1 min-w-[100px]">
+                            <span class="text-3xl md:text-4xl font-bold font-heading text-neon-blue block">+Zh</span>
+                            <span class="text-xs text-gray-500 uppercase tracking-[0.18em]">De conteúdo e
+                                consultoria</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center fade-in-element">
+                    <div
+                        class="w-64 h-64 md:w-80 md:h-80 border-2 border-neon-green/20 rounded-full relative flex justify-center items-center overflow-hidden shadow-[0_0_30px_rgba(0,255,157,0.2)]">
+                        <img src="./assets/images/profile.jpg" alt="Foto do Especialista"
+                            class="w-full h-full object-cover relative z-10"
+                            onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'text-neon-green text-center p-4\'>Imagem não encontrada</div>'">
+                        <div
+                            class="absolute w-full h-full rounded-full border-t-2 border-neon-green animate-spin-slow pointer-events-none z-20">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Section -->
+    <section id="servicos" class="py-20 px-6 md:px-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-10 fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">O que eu faço</h3>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
+                    Serviços pensados como produtos.
+                </h2>
+                <p class="text-zinc-300 mt-4 max-w-2xl">
+                    Nada de lista de buzzwords. Cada bloco abaixo é um pacote de trabalho com começo, meio e fim —
+                    sempre conectado a resultado de negócio.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div
+                    class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 hover:border-neon-green/40 hover:shadow-[0_0_20px_rgba(0,255,157,0.1)] transition-all duration-300 fade-in-element">
+                    <h3 class="text-xl font-semibold text-white mb-2 font-heading">DevOps & Infra</h3>
+                    <p class="text-zinc-300 mb-4">
+                        Arquitetura, automação e confiabilidade para os seus apps e APIs.
+                    </p>
+                    <ul class="text-zinc-300 space-y-2 text-sm">
+                        <li>• Configuração de servidores e pipelines CI/CD</li>
+                        <li>• Automação de deploys e rollback seguro</li>
+                        <li>• Monitoramento básico de performance e erros</li>
+                    </ul>
+                </div>
+
+                <div
+                    class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 hover:border-neon-blue/40 hover:shadow-[0_0_20px_rgba(0,240,255,0.1)] transition-all duration-300 fade-in-element">
+                    <h3 class="text-xl font-semibold text-white mb-2 font-heading">Tracking & Analytics</h3>
+                    <p class="text-zinc-300 mb-4">
+                        Do evento certo no lugar certo até o dashboard que você realmente usa.
+                    </p>
+                    <ul class="text-zinc-300 space-y-2 text-sm">
+                        <li>• API de Conversão (CAPI) e GTM Server-Side</li>
+                        <li>• Data Layer personalizado e eventos de funil</li>
+                        <li>• Integração com CRMs e gateways de pagamento</li>
+                    </ul>
+                </div>
+
+                <div
+                    class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 hover:border-white/40 hover:shadow-[0_0_20px_rgba(255,255,255,0.06)] transition-all duration-300 fade-in-element">
+                    <h3 class="text-xl font-semibold text-white mb-2 font-heading">Growth & Marketing Técnico</h3>
+                    <p class="text-zinc-300 mb-4">
+                        Estratégia, execução e medição num mesmo fluxo.
+                    </p>
+                    <ul class="text-zinc-300 space-y-2 text-sm">
+                        <li>• Otimização de LCP/FID e conversão em landing pages</li>
+                        <li>• Testes e ajustes guiados por dados reais</li>
+                        <li>• Conexão entre anúncios, funis e receita</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Processo Section -->
+    <section id="processo" class="py-20 px-6 md:px-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-10 fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">Como eu trabalho</h3>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
+                    Como eu entro na sua stack.
+                </h2>
+                <p class="text-zinc-300 mt-4 max-w-2xl">
+                    Um fluxo único que conecta infra, dados e crescimento — sem projetos infinitos.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="glass-card p-4 rounded-xl bg-white/5 backdrop-blur border border-white/5 fade-in-element">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">1.
+                        Descobrir</span>
+                    <h3 class="mt-2 text-lg font-semibold text-white">Contexto antes de solução</h3>
+                    <p class="mt-2 text-sm text-zinc-300">
+                        Entendo sua operação, stack atual, gargalos e objetivos de negócio antes de propor qualquer
+                        ferramenta.
+                    </p>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl bg-white/5 backdrop-blur border border-white/5 fade-in-element">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">2.
+                        Arquitetar</span>
+                    <h3 class="mt-2 text-lg font-semibold text-white">Desenho da solução</h3>
+                    <p class="mt-2 text-sm text-zinc-300">
+                        Defino fluxos de DevOps, tracking e growth que se conversam, com um MVP claro e um roadmap
+                        realista.
+                    </p>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl bg-white/5 backdrop-blur border border-white/5 fade-in-element">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">3.
+                        Implementar</span>
+                    <h3 class="mt-2 text-lg font-semibold text-white">Mão na massa</h3>
+                    <p class="mt-2 text-sm text-zinc-300">
+                        Coloco em produção pipelines, integrações, eventos, dashboards e o que mais for necessário para
+                        o sistema funcionar.
+                    </p>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl bg-white/5 backdrop-blur border border-white/5 fade-in-element">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">4. Aprender &
+                        Escalar</span>
+                    <h3 class="mt-2 text-lg font-semibold text-white">Ciclos contínuos</h3>
+                    <p class="mt-2 text-sm text-zinc-300">
+                        Acompanhamento, análises e novos experimentos para manter a stack alinhada ao que o negócio
+                        precisa.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Para quem Section -->
+    <section id="para-quem" class="py-20 px-6 md:px-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-10 fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">Para quem é</h3>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
+                    Especialmente útil se você é…
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 fade-in-element">
+                    <h3 class="text-xl font-semibold text-white mb-2 font-heading">Criador / Infoprodutor</h3>
+                    <p class="text-zinc-300 text-sm">
+                        Vende cursos, mentorias ou produtos digitais e quer enxergar, de verdade, o que funciona
+                        em cada etapa do funil — do anúncio ao faturamento.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 fade-in-element">
+                    <h3 class="text-xl font-semibold text-white mb-2 font-heading">SaaS / Produto Digital</h3>
+                    <p class="text-zinc-300 text-sm">
+                        Tem app ou plataforma e precisa de deploy confiável, feature flags, telemetria e métricas de
+                        retenção
+                        para tomar decisão de roadmap com segurança.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 fade-in-element">
+                    <h3 class="text-xl font-semibold text-white mb-2 font-heading">E-commerce / Negócios recorrentes
+                    </h3>
+                    <p class="text-zinc-300 text-sm">
+                        Depende de performance e recorrência e não aguenta mais olhar para métricas quebradas ou
+                        dashboards genéricos
+                        que ninguém confia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cases Section -->
+    <section id="cases" class="py-20 px-6 md:px-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-10 fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">Casos & Experimentos
+                </h3>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
+                    Menos slide bonito, mais stack funcionando.
+                </h2>
+                <p class="text-zinc-300 mt-4 max-w-2xl">
+                    Alguns exemplos de como juntar DevOps, tracking e growth muda o jogo.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <article
+                    class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 hover:border-neon-green/40 hover:shadow-[0_0_25px_rgba(0,255,157,0.1)] transition-all duration-300 fade-in-element">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">DevOps &
+                        Tracking</span>
+                    <h3 class="mt-3 text-lg font-semibold text-white">
+                        De deploy no susto para releases semanais com dados confiáveis
+                    </h3>
+                    <p class="mt-3 text-sm text-zinc-300">
+                        Produto digital com deploy manual, sem rollback fácil e sem logs centralizados.
+                    </p>
+                    <ul class="mt-3 text-sm text-zinc-300 space-y-1">
+                        <li>• Pipeline CI/CD com staging e produção separados</li>
+                        <li>• Logs e métricas básicos em um único lugar</li>
+                        <li>• Instrumentação dos eventos principais de uso</li>
+                    </ul>
+                </article>
+
+                <article
+                    class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 hover:border-neon-blue/40 hover:shadow-[0_0_25px_rgba(0,240,255,0.1)] transition-all duration-300 fade-in-element">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-neon-blue font-heading">Tracking &
+                        Growth</span>
+                    <h3 class="mt-3 text-lg font-semibold text-white">
+                        Funil cego de vendas para visão do clique ao faturamento
+                    </h3>
+                    <p class="mt-3 text-sm text-zinc-300">
+                        Operação de produtos digitais com muito tráfego, mas pouca clareza sobre quais campanhas geravam
+                        caixa.
+                    </p>
+                    <ul class="mt-3 text-sm text-zinc-300 space-y-1">
+                        <li>• Padronização de UTMs e eventos de conversão</li>
+                        <li>• Integração entre anúncios, checkout e CRM</li>
+                        <li>• Dashboard único com CAC, LTV e payback por canal</li>
+                    </ul>
+                </article>
+
+                <article
+                    class="glass-card p-6 rounded-xl bg-white/5 backdrop-blur border border-white/5 hover:border-white/40 hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] transition-all duration-300 fade-in-element">
+                    <span class="text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading">LP &
+                        Experimentação</span>
+                    <h3 class="mt-3 text-lg font-semibold text-white">
+                        De LP feita “no olho” para otimização contínua guiada por dados
+                    </h3>
+                    <p class="mt-3 text-sm text-zinc-300">
+                        Landing page bonita, CTR ok, mas conversão baixa — e ninguém sabia ao certo o porquê.
+                    </p>
+                    <ul class="mt-3 text-sm text-zinc-300 space-y-1">
+                        <li>• Revisão da proposta de valor e mensagens principais</li>
+                        <li>• Tracking de scroll, cliques e formulário</li>
+                        <li>• Testes A/B contínuos em headline, oferta e layout</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stack & Formato Section -->
+    <section id="stack" class="py-20 px-6 md:px-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+            <div class="fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">Stack</h3>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
+                    Tecnologia que conversa entre si.
+                </h2>
+                <p class="text-zinc-300 mb-6">
+                    Não se trata de usar todas as ferramentas, e sim as certas, do jeito certo,
+                    para o tamanho e o momento do seu negócio.
+                </p>
+
+                <div class="grid grid-cols-2 gap-4 text-sm text-zinc-300">
+                    <div>
+                        <h4 class="text-white font-semibold mb-2">Infra & Cloud</h4>
+                        <ul class="space-y-1">
+                            <li>• AWS, Hetzner, DigitalOcean</li>
+                            <li>• Docker, Kubernetes (quando faz sentido)</li>
+                            <li>• Terraform e automação de infra</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-2">Observabilidade & Dados</h4>
+                        <ul class="space-y-1">
+                            <li>• Logs, métricas e alertas</li>
+                            <li>• GA4, eventos custom e server-side</li>
+                            <li>• Dashboards claros para o time</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-2">Integrações & Automação</h4>
+                        <ul class="space-y-1">
+                            <li>• n8n e automações sob medida</li>
+                            <li>• APIs de anúncios e mensageria</li>
+                            <li>• Webhooks entre CRM, gateway e BI</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-2">Growth & Conteúdo</h4>
+                        <ul class="space-y-1">
+                            <li>• LPs, funis e onboardings</li>
+                            <li>• Testes A/B e experimentação contínua</li>
+                            <li>• Conteúdo técnico e educacional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">Formato</h3>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
+                    Jeitos de trabalhar comigo.
+                </h2>
+                <p class="text-zinc-300 mb-6">
+                    Modelos pensados para tamanhos de operação diferentes — da revisão pontual ao acompanhamento
+                    contínuo.
+                </p>
+
+                <div class="space-y-4 text-sm text-zinc-300">
+                    <div class="glass-card p-4 rounded-xl bg-white/5 backdrop-blur border border-white/5">
+                        <h4 class="text-white font-semibold mb-1">Projeto fechado</h4>
+                        <p>
+                            Escopo claro, início, meio e fim. Ideal para destravar um gargalo específico
+                            (infra, tracking ou funil).
+                        </p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl bg-white/5 backdrop-blur border border-white/5">
+                        <h4 class="text-white font-semibold mb-1">Retainer / mensalidade</h4>
+                        <p>
+                            Acompanhamento contínuo, otimizações e novos experimentos. Você ganha um “par de olhos
+                            técnicos”
+                            olhando sempre para a stack e os números.
+                        </p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl bg-white/5 backdrop-blur border border-white/5">
+                        <h4 class="text-white font-semibold mb-1">Sessões pontuais</h4>
+                        <p>
+                            Revisão de arquitetura, brainstorm estratégico ou pair em problemas específicos — sem
+                            compromisso
+                            de longo prazo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conteúdos Section -->
+    <section id="conteudos" class="py-20 px-6 md:px-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="fade-in-element">
+                <h3 class="text-neon-green text-sm font-heading tracking-[0.2em] mb-2 uppercase">Conteúdo</h3>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
+                    Quer ver como eu penso antes de trabalhar comigo?
+                </h2>
+                <p class="text-zinc-300 mb-6">
+                    Produzo conteúdo técnico e estratégico sobre DevOps, observabilidade, automação e growth —
+                    exatamente o que aplico na prática com clientes.
+                </p>
+                <ul class="text-zinc-300 text-sm space-y-2 mb-6">
+                    <li>• Por que sua infra e seu marketing vivem brigando com os dados</li>
+                    <li>• Como medir o que importa no seu funil em vez de perseguir vaidade</li>
+                    <li>• DevOps para negócios pequenos que não querem virar uma big tech</li>
+                </ul>
+                <a href="#" class="inline-flex items-center justify-center px-6 py-3 rounded border border-neon-blue text-neon-blue
+                  font-semibold uppercase tracking-wide text-sm hover:bg-neon-blue hover:text-black
+                  hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all duration-300">
+                    Ver conteúdo no YouTube
+                </a>
+            </div>
+
+            <div class="fade-in-element">
+                <div
+                    class="relative w-full max-w-md mx-auto aspect-video rounded-2xl border border-white/10 bg-gradient-to-br from-black via-dark-bg to-black shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden flex items-center justify-center">
+                    <div
+                        class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,_#00f0ff,_transparent_60%)]">
+                    </div>
+                    <div class="relative z-10 text-center px-6">
+                        <span
+                            class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-neon-green font-heading mb-3">
+                            <i class="fa-brands fa-youtube text-red-500"></i> Conteúdo em vídeo
+                        </span>
+                        <h3 class="text-xl font-heading font-semibold text-white mb-2">
+                            Debugando stacks reais em público.
+                        </h3>
+                        <p class="text-sm text-zinc-300">
+                            Análises ao vivo de infra, tracking e funis — com código, painel e contexto de negócio.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="py-24 px-6 md:px-12 border-t border-white/5">
+        <div class="mx-auto max-w-5xl">
+            <div
+                class="grid md:grid-cols-5 bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 shadow-2xl fade-in-element">
+
+                <!-- Lado esquerdo: sua foto + texto -->
+                <div class="md:col-span-2 bg-neon-green/5 p-10 flex flex-col justify-between border-r border-white/5">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div
+                            class="w-20 h-20 rounded-full overflow-hidden border-2 border-neon-green shadow-[0_0_20px_rgba(0,255,157,0.25)]">
+                            <img src="./assets/images/profile-contact.jpg"
+                                alt="Foto de [SEU NOME] olhando para a câmera" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-heading font-bold text-white">
+                                Vamos alinhar a sua stack?
+                            </h2>
+                            <p class="text-xs text-gray-300">
+                                Uma call de 30 minutos para entender o seu cenário e ver se faz sentido trabalhar
+                                juntos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 text-sm">
+                        <p>
+                            Nada de pitch agressivo. A ideia é ouvir onde você está hoje, para onde quer ir
+                            e o que já tentou no meio do caminho.
+                        </p>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-neon-green"></i>
+                            <span>contato@marktracking.com</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-map-marker-alt text-neon-green"></i>
+                            <span>Brasil / Remoto</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 mt-8 text-2xl">
+                        <a href="#" class="text-white hover:text-neon-blue transition-colors"><i
+                                class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white hover:text-neon-blue transition-colors"><i
+                                class="fab fa-github"></i></a>
+                        <a href="#" class="text-white hover:text-neon-blue transition-colors"><i
+                                class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Lado direito: form enxuto -->
+                <div class="md:col-span-3 p-10">
+                    <form id="leadForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm text-gray-400 mb-2">Nome completo</label>
+                            <input type="text" id="name" name="name" required
+                                class="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:outline-none focus:border-neon-blue focus:bg-neon-blue/5 transition-all">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm text-gray-400 mb-2">E-mail</label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:outline-none focus:border-neon-blue focus:bg-neon-blue/5 transition-all">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm text-gray-400 mb-2">Telefone / WhatsApp</label>
+                            <input type="tel" id="phone" name="phone" required
+                                class="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:outline-none focus:border-neon-blue focus:bg-neon-blue/5 transition-all">
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-4 text-neon-green border border-neon-green font-bold uppercase tracking-wider
+                         hover:bg-neon-green hover:text-black hover:shadow-[0_0_20px_#00ff9d] transition-all duration-300 rounded">
+                            Enviar solicitação
+                        </button>
+                        <p id="formStatus" class="text-center mt-4 text-sm"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-white/5 mt-10">
+        <div
+            class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs md:text-sm text-gray-500 gap-4">
+            <p>&copy; 2026 Marktracking Performance Solutions.</p>
+            <div class="flex gap-6">
+                <a href="legal.html#introducao" class="hover:text-neon-green transition-colors">
+                    Termos de Uso, Privacidade e LGPD
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

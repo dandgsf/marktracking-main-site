@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKTRACKING | Termos, Privacidade e LGPD</title>
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-green': '#00ff9d',
+                        'neon-blue': '#00f0ff',
+                        'dark-bg': '#050505',
+                        'dark-surface': '#0a0a0a',
+                    },
+                    fontFamily: {
+                        heading: ['Orbitron', 'sans-serif'],
+                        body: ['Rajdhani', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-dark-bg text-gray-200 font-body overflow-x-hidden relative">
+
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-20 opacity-20 pointer-events-none"></canvas>
+
+    <header class="border-b border-white/5 bg-black/70 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="./Logo/Logo/Logo com slogan/Colorido/PNG/Prancheta 1.png" alt="Marktracking Logo"
+                    class="h-10">
+                <span class="text-xs md:text-sm tracking-[0.25em] uppercase text-zinc-400 font-heading">
+                    Marktracking Performance Solutions
+                </span>
+            </a>
+            <a href="index.html" class="text-xs md:text-sm text-neon-blue border border-neon-blue px-4 py-2 rounded
+              hover:bg-neon-blue hover:text-black transition-all">
+                Voltar para o site
+            </a>
+        </div>
+    </header>
+
+
+    <main class="max-w-3xl mx-auto px-6 py-12 space-y-10">
+        <section id="introducao" class="space-y-4">
+            <h1 class="text-3xl md:text-4xl font-heading font-bold text-white">
+                Termos de Uso, Privacidade e LGPD
+            </h1>
+            <p class="text-sm text-zinc-400">
+                Última atualização: [data]
+            </p>
+            <p class="text-zinc-200 text-sm leading-relaxed">
+                Este documento explica como a Marktracking Performance Solutions (“Marktracking”, “nós”, “nosso”)
+                trata dados pessoais em conformidade com a Lei Geral de Proteção de Dados (Lei 13.709/2018 – LGPD),
+                e estabelece os termos para uso do site e dos serviços de consultoria em DevOps, tracking e growth.
+            </p>
+            <p class="text-xs text-zinc-500">
+                Este texto é um modelo informativo e não substitui aconselhamento jurídico profissional. Recomenda-se
+                revisão por um advogado para adequação completa ao seu contexto.
+            </p>
+        </section>
+
+        <!-- Termos de Uso -->
+        <section id="termos" class="space-y-4">
+            <h2 class="text-2xl font-heading font-bold text-white">1. Termos de Uso</h2>
+
+            <h3 class="text-lg font-semibold text-white">1.1. Objeto</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                O site da Marktracking apresenta informações sobre serviços de consultoria em DevOps, infraestrutura,
+                trackeamento avançado de eventos, analytics e growth. Através do formulário de contato, visitantes podem
+                solicitar reunião, proposta ou esclarecimento.
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">1.2. Uso adequado do site</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Você se compromete a utilizar o site de forma lícita, ética e em conformidade com estes Termos.
+                É vedado tentar explorar vulnerabilidades, realizar testes não autorizados de segurança, automações
+                abusivas de formulário ou qualquer atividade que comprometa a disponibilidade ou integridade do serviço.
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">1.3. Conteúdos e informações</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Os conteúdos publicados (artigos, vídeos, textos técnicos, estudos de caso) têm caráter informativo
+                e educacional. Eles não configuram promessa de resultado específico para o seu negócio, pois resultados
+                dependem de fatores fora do controle da Marktracking (mercado, execução interna, orçamento, histórico
+                etc.).
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">1.4. Propriedade intelectual</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Todo o conteúdo do site (textos, logotipos, layout, elementos visuais, código-fonte) é protegido por
+                direitos de propriedade intelectual e não pode ser reproduzido, distribuído ou modificado sem
+                autorização
+                prévia e escrita, exceto nos casos permitidos pela legislação (ex.: citação com atribuição).
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">1.5. Limitação de responsabilidade</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                A Marktracking envida esforços razoáveis para manter o site disponível e seguro, mas não garante
+                disponibilidade ininterrupta nem ausência de erros. O uso das informações do site é de responsabilidade
+                do usuário, que deve sempre avaliar seu contexto específico antes de tomar decisões de negócio.
+            </p>
+        </section>
+
+        <!-- Privacidade / LGPD -->
+        <section id="privacidade" class="space-y-4">
+            <h2 class="text-2xl font-heading font-bold text-white">2. Política de Privacidade e LGPD</h2>
+
+            <h3 class="text-lg font-semibold text-white">2.1. Controlador dos dados</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                O controlador dos dados pessoais tratados no contexto deste site é:
+            </p>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                <strong>Marktracking Performance Solutions</strong><br>
+                E-mail de contato para questões de dados pessoais: <strong>contato@marktracking.com</strong>
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">2.2. Dados pessoais coletados</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Podemos coletar e tratar os seguintes dados pessoais:
+            </p>
+            <ul class="list-disc list-inside text-sm text-zinc-200 leading-relaxed">
+                <li>Dados de contato fornecidos no formulário: nome completo, e-mail e telefone/WhatsApp.</li>
+                <li>
+                    Dados técnicos de navegação: endereço IP, tipo de dispositivo e navegador, páginas acessadas, data e
+                    hora,
+                    por meio de ferramentas de analytics e tracking (quando configuradas).
+                </li>
+                <li>
+                    Informações relacionadas à sua empresa e contexto técnico, quando fornecidas por você em reuniões
+                    ou comunicações (ex.: stack atual, ferramentas utilizadas, dores de negócio).
+                </li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-white">2.3. Finalidades de tratamento</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Utilizamos seus dados pessoais para as seguintes finalidades:
+            </p>
+            <ul class="list-disc list-inside text-sm text-zinc-200 leading-relaxed">
+                <li>Responder solicitações feitas via formulário de contato.</li>
+                <li>Agendar reuniões, calls e apresentações sobre serviços.</li>
+                <li>Elaborar propostas comerciais e contratos.</li>
+                <li>
+                    Executar serviços de consultoria em DevOps, tracking, analytics e growth, quando houver contratação.
+                </li>
+                <li>
+                    Melhorar o site, conteúdos e comunicações, com base em métricas de uso (quando houver analytics
+                    ativo).
+                </li>
+                <li>Cumprir obrigações legais e regulatórias aplicáveis.</li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-white">2.4. Bases legais utilizadas</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                O tratamento de dados pessoais pela Marktracking se fundamenta, conforme o caso, nas seguintes bases
+                legais
+                da LGPD:
+            </p>
+            <ul class="list-disc list-inside text-sm text-zinc-200 leading-relaxed">
+                <li>
+                    <strong>Execução de contrato</strong> ou de procedimentos preliminares (art. 7º, V), quando tratamos
+                    dados para elaborar propostas, firmar contratos e prestar serviços.
+                </li>
+                <li>
+                    <strong>Legítimo interesse</strong> do controlador (art. 7º, IX), para comunicação com potenciais
+                    clientes
+                    que iniciaram contato e para melhoria contínua dos serviços, respeitando sempre seus direitos e
+                    liberdades.
+                </li>
+                <li>
+                    <strong>Cumprimento de obrigação legal ou regulatória</strong> (art. 7º, II), como obrigações
+                    fiscais
+                    e contábeis.
+                </li>
+                <li>
+                    <strong>Consentimento</strong> (art. 7º, I), quando exigido para o uso de determinados
+                    cookies/trackers
+                    ou envios de comunicações específicas.
+                </li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-white">2.5. Compartilhamento de dados</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Seus dados pessoais podem ser compartilhados com:
+            </p>
+            <ul class="list-disc list-inside text-sm text-zinc-200 leading-relaxed">
+                <li>Provedores de hospedagem e infraestrutura de TI.</li>
+                <li>Plataformas de e-mail, agenda e videoconferência (ex.: serviços de e-mail, calendários, etc.).</li>
+                <li>
+                    Ferramentas de analytics e tracking, quando configuradas, sempre buscando minimizar a coleta
+                    e respeitar configurações de privacidade.
+                </li>
+                <li>
+                    Prestadores de serviço auxiliares (ex.: contabilidade), quando necessário para execução de
+                    obrigações
+                    legais e contratuais.
+                </li>
+            </ul>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Não vendemos seus dados pessoais.
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">2.6. Transferência internacional</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Alguns prestadores de serviço utilizados podem estar localizados fora do Brasil. Nesses casos, buscamos
+                utilizar ferramentas que adotem padrões reconhecidos de proteção de dados e segurança da informação, em
+                linha
+                com os requisitos da LGPD.
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">2.7. Retenção de dados</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Seus dados são armazenados pelo tempo necessário para cumprir as finalidades descritas nesta Política,
+                incluindo:
+            </p>
+            <ul class="list-disc list-inside text-sm text-zinc-200 leading-relaxed">
+                <li>Registros de contato e propostas: enquanto durar a negociação e por prazo razoável após o
+                    encerramento.</li>
+                <li>Dados contratuais: pelo prazo necessário ao cumprimento de obrigações legais e à defesa em eventuais
+                    ações.</li>
+                <li>
+                    Dados de navegação: pelo período definido nas configurações da ferramenta de analytics utilizada,
+                    sempre em conformidade com a legislação aplicável.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Direitos do titular e exclusão -->
+        <section id="direitos" class="space-y-4">
+            <h2 class="text-2xl font-heading font-bold text-white">3. Direitos do titular e exclusão de dados</h2>
+
+            <h3 class="text-lg font-semibold text-white">3.1. Seus direitos (LGPD)</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Nos termos da LGPD, você tem direito, a qualquer momento e mediante requisição, a:
+            </p>
+            <ul class="list-disc list-inside text-sm text-zinc-200 leading-relaxed">
+                <li>Confirmar se tratamos dados pessoais a seu respeito.</li>
+                <li>Acessar seus dados pessoais.</li>
+                <li>Corrigir dados incompletos, inexatos ou desatualizados.</li>
+                <li>Solicitar anonimização, bloqueio ou eliminação de dados desnecessários ou excessivos.</li>
+                <li>Solicitar portabilidade dos dados a outro fornecedor de serviço, quando aplicável.</li>
+                <li>Solicitar eliminação de dados tratados com base em consentimento, quando essa for a base legal.</li>
+                <li>Obter informações sobre compartilhamento de dados com terceiros.</li>
+                <li>Revogar consentimento, quando o tratamento se basear nele.</li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-white">3.2. Como solicitar exclusão ou exercer direitos</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Para exercer qualquer um dos direitos acima, incluindo pedidos de exclusão de dados, entre em contato
+                pelo e-mail
+                <strong>contato@marktracking.com</strong>, com o assunto “Direitos de titular de dados (LGPD)”.
+            </p>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Para sua segurança, poderemos solicitar informações adicionais para confirmar sua identidade antes de
+                atender
+                à solicitação.
+            </p>
+
+            <h3 class="text-lg font-semibold text-white">3.3. Limitações legais à exclusão</h3>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Em alguns casos, não poderemos excluir imediatamente todos os seus dados, por exemplo quando houver
+                obrigação legal ou regulatória de retenção (ex.: documentos fiscais) ou quando os dados forem
+                necessários
+                para resguardar direitos da Marktracking em eventuais ações judiciais ou administrativas.
+            </p>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Nesses casos, limitaremos o tratamento ao mínimo necessário, registraremos a sua solicitação e
+                informaremos
+                o prazo estimado de retenção.
+            </p>
+        </section>
+
+        <!-- Atualizações -->
+        <section id="atualizacoes" class="space-y-4">
+            <h2 class="text-2xl font-heading font-bold text-white">4. Atualizações desta política</h2>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Podemos atualizar estes Termos e esta Política de Privacidade periodicamente para refletir mudanças na
+                prestação
+                de serviços, em exigências legais ou em nossas práticas de tratamento de dados.
+            </p>
+            <p class="text-sm text-zinc-200 leading-relaxed">
+                Quando isso ocorrer, a nova versão será publicada neste mesmo endereço, com indicação da data de
+                atualização.
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-black py-6 border-t border-white/5 mt-10">
+        <div
+            class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs md:text-sm text-gray-500 gap-4">
+            <p>&copy; 2026 Marktracking Performance Solutions.</p>
+            <a href="index.html" class="hover:text-neon-green transition-colors">Voltar para o site</a>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
