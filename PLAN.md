@@ -14,99 +14,53 @@
 *Objetivo: Ambiente local impecável, zero risco de exposição de credenciais*
 
 ### 1.1 Inicialização do Projeto Next.js
-- [ ] Criar projeto Next.js 15 com TypeScript: `npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias "@/*"`
-- [ ] Confirmar estrutura de pastas gerada (`app/`, `components/`, `lib/`, `public/`)
-- [ ] Instalar dependências adicionais:
-  - [ ] `framer-motion` — animações
-  - [ ] `@react-three/fiber` + `@react-three/drei` + `three` — 3D Hero
-  - [ ] `react-hook-form` + `zod` + `@hookform/resolvers` — formulário
-  - [ ] `@supabase/supabase-js` — client Supabase
-  - [ ] `resend` — SDK de email (server-side)
-  - [ ] `lucide-react` — ícones
-  - [ ] `react-email` + `@react-email/components` — templates de email
-- [ ] Verificar `package.json` e `package-lock.json` gerados corretamente
+- [x] Criar projeto Next.js 15 com TypeScript: `pnpm create next-app@latest` (Next.js 16.2.2 instalado via pnpm)
+- [x] Confirmar estrutura de pastas gerada (`app/`, `components/`, `lib/`, `public/`)
+- [x] Instalar dependências adicionais:
+  - [x] `framer-motion` — animações
+  - [x] `@react-three/fiber` + `@react-three/drei` + `three` + `@types/three` — 3D Hero
+  - [x] `react-hook-form` + `zod` + `@hookform/resolvers` — formulário
+  - [x] `@supabase/supabase-js` — client Supabase
+  - [x] `resend` — SDK de email (server-side)
+  - [x] `lucide-react` — ícones
+  - [x] `react-email` + `@react-email/components` — templates de email
+- [x] Verificar `package.json` e `pnpm-lock.yaml` gerados corretamente
 
 ### 1.2 Configuração do .gitignore
-- [ ] Garantir que o `.gitignore` bloqueie **absolutamente**:
-  - [ ] `.env` / `.env.local` / `.env.*.local` / `.env.production`
-  - [ ] `*.pem`, `*.key`, `*.cert`
-  - [ ] `.vercel/` (pode conter tokens)
-  - [ ] `node_modules/`
-  - [ ] `.next/` (build artifacts)
-  - [ ] `out/` (static export)
-  - [ ] Arquivos de OS: `.DS_Store`, `Thumbs.db`
-  - [ ] Logs: `*.log`, `npm-debug.log*`
-- [ ] **Verificar manualmente** que nenhum arquivo sensível está staged antes do primeiro commit
+- [x] Garantir que o `.gitignore` bloqueie **absolutamente**:
+  - [x] `.env` / `.env.local` / `.env.*.local` / `.env.production`
+  - [x] `*.pem`, `*.key`, `*.cert`
+  - [x] `.vercel/` (pode conter tokens)
+  - [x] `node_modules/`
+  - [x] `.next/` (build artifacts)
+  - [x] `out/` (static export)
+  - [x] Arquivos de OS: `.DS_Store`, `Thumbs.db`
+  - [x] Logs: `*.log`, `npm-debug.log*`
+- [x] **Verificar manualmente** que nenhum arquivo sensível está staged antes do primeiro commit
 
 ### 1.3 Variáveis de Ambiente
-- [ ] Criar `.env.example` com todas as variáveis necessárias (valores em branco/placeholder):
-  ```
-  NEXT_PUBLIC_SUPABASE_URL=
-  NEXT_PUBLIC_SUPABASE_ANON_KEY=
-  SUPABASE_SERVICE_ROLE_KEY=
-  RESEND_API_KEY=
-  N8N_WEBHOOK_SECRET=
-  N8N_LEAD_WEBHOOK_URL=
-  NEXT_PUBLIC_SITE_URL=
-  ```
-- [ ] Criar `.env.local` local com valores reais (NUNCA commitar)
-- [ ] Validar que `.env.local` está no `.gitignore` ANTES de preencher valores
-- [ ] Testar `git status` para confirmar que `.env.local` não aparece como untracked
+- [x] Criar `.env.example` com todas as variáveis necessárias (valores em branco/placeholder)
+- [ ] Criar `.env.local` local com valores reais (NUNCA commitar) — pendente: aguarda credenciais
+- [x] Validar que `.env.local` está no `.gitignore` ANTES de preencher valores
+- [x] Testar `git status` para confirmar que `.env.local` não aparece como untracked
 
 ### 1.4 Estrutura de Pastas
-- [ ] Organizar estrutura final:
-  ```
-  app/
-    layout.tsx          — Root layout (fontes, metadata global)
-    page.tsx            — Home page
-    legal/
-      page.tsx          — Página legal (migrada do legal.html)
-    api/
-      leads/
-        route.ts        — POST endpoint de captura de lead
-      health/
-        route.ts        — GET health check
-  components/
-    layout/
-      Nav.tsx
-      Footer.tsx
-    sections/
-      Hero.tsx
-      Sobre.tsx
-      Servicos.tsx
-      Processo.tsx
-      Cases.tsx
-      CTABand.tsx
-      Contato.tsx
-    ui/
-      Button.tsx
-      Card.tsx
-      Input.tsx
-      Badge.tsx
-      GlowBorder.tsx
-    three/
-      ParticleField.tsx — Componente 3D isolado (lazy-loaded)
-  lib/
-    supabase/
-      client.ts         — Supabase browser client
-      server.ts         — Supabase server client (service role)
-    validations/
-      lead.ts           — Zod schema do lead
-    utils.ts
-  emails/
-    LeadWelcome.tsx
-    LeadInternal.tsx
-  public/
-    (assets migrados do site atual)
-  ```
-- [ ] Mover assets (Logo, imagens) de `assets/` e `Logo/` para `public/`
-- [ ] Commit inicial limpo: `feat: scaffold Next.js 15 project structure`
+- [x] Organizar estrutura final (app/, components/, lib/, emails/, public/)
+- [x] `app/layout.tsx` — fontes Orbitron + Rajdhani via next/font, metadata PT-BR
+- [x] `app/globals.css` — design system: tokens Tailwind v4, glassmorphism, keyframes, scrollbar
+- [x] `app/page.tsx` — scaffold da home (seções implementadas na Fase 2)
+- [x] `app/api/leads/route.ts` — POST com Zod + Supabase server + n8n webhook via `after()`
+- [x] `app/api/health/route.ts` — GET health check
+- [x] `lib/supabase/client.ts` — browser client (anon key)
+- [x] `lib/supabase/server.ts` — server client (service role, server-side only)
+- [x] `lib/validations/lead.ts` — Zod schema completo do lead
+- [ ] Mover assets (Logo, imagens) de `assets/` e `Logo/` para `public/` — pendente Fase 2
+- [x] Commit da Fase 1
 
 ### 1.5 Verificação Final da Fase 1
-- [ ] Rodar `npm run dev` — aplicação sobe sem erros
-- [ ] Rodar `git status` — nenhum arquivo `.env*` aparece
-- [ ] Rodar `git log` — commit inicial registrado
-- [ ] **Cheklist de segurança**: abrir `.gitignore` e confirmar visualmente cada linha crítica
+- [x] Rodar `pnpm run build` — build passou sem erros (Next.js 16.2.2, Turbopack)
+- [x] Rodar `git status` — nenhum arquivo `.env*` aparece
+- [x] **Checklist de segurança**: `.gitignore` confirmado visualmente
 
 ---
 
@@ -410,7 +364,7 @@
 
 | Fase | Status | Conclusão |
 |---|---|---|
-| Fase 1 — Setup Hermético | `[ ]` Pendente | — |
+| Fase 1 — Setup Hermético | `[x]` Concluído | 2026-04-04 |
 | Fase 2 — Frontend Wow-Factor | `[ ]` Pendente | — |
 | Fase 3 — Supabase + Datalayer | `[ ]` Pendente | — |
 | Fase 4 — n8n + Resend | `[ ]` Pendente | — |
