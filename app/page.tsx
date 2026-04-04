@@ -1,22 +1,21 @@
-// Fase 2 — componentes de seção serão implementados aqui
+import Hero from "@/components/sections/Hero";
+import Sobre from "@/components/sections/Sobre";
+import Servicos from "@/components/sections/Servicos";
+import Processo from "@/components/sections/Processo";
+import Cases from "@/components/sections/Cases";
+import CTABand from "@/components/sections/CTABand";
+import Contato from "@/components/sections/Contato";
+
 export default function HomePage() {
   return (
     <main>
-      <section
-        id="hero"
-        className="flex min-h-screen items-center justify-center"
-      >
-        <div className="text-center">
-          <h1
-            className="text-4xl font-bold md:text-6xl text-glow-green font-heading"
-          >
-            MARKTRACKING
-          </h1>
-          <p className="mt-4 text-lg font-body text-slate-200">
-            Performance Solutions
-          </p>
-        </div>
-      </section>
+      <Hero />
+      <Sobre />
+      <Servicos />
+      <Processo />
+      <Cases />
+      <CTABand />
+      <Contato />
     </main>
   );
 }

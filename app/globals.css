@@ -57,6 +57,16 @@
   100% { transform: translateX(100%); }
 }
 
+@keyframes ripple-expand {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(20); opacity: 0; }
+}
+
+@keyframes shimmer-btn {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
 /* =============================================================================
    BASE STYLES
    ============================================================================= */
@@ -66,6 +76,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 72px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -132,6 +143,14 @@ body {
 .text-glow-blue {
   color: #00f0ff;
   text-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.3);
+}
+
+/* Static brand gradient text (green → blue, no animation) */
+.text-gradient-brand {
+  background: linear-gradient(135deg, #00ff9d, #00f0ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Shimmer gradient text */
