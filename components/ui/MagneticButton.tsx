@@ -2,6 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import { useIsTouch } from '@/hooks/useMediaQuery'
 
 interface MagneticButtonProps {
   children: React.ReactNode
@@ -19,6 +20,7 @@ export default function MagneticButton({
   strength = 0.3,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null)
+  const isTouch = useIsTouch()
 
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -28,7 +30,7 @@ export default function MagneticButton({
   const springY = useSpring(y, springConfig)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
+    if (!ref.current || isTouch) return
     const rect = ref.current.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
@@ -49,6 +51,21 @@ export default function MagneticButton({
     className,
   ].join(' ')
 
+  // Touch-optimized: bypass motion wrapper for better tap response
+  if (isTouch) {
+    const Component = href ? 'a' : 'button'
+    return (
+      <Component
+        href={href}
+        onClick={onClick}
+        className={baseClasses}
+        style={{ touchAction: 'manipulation' }}
+      >
+        {children}
+      </Component>
+    )
+  }
+
   const Component = href ? motion.a : motion.button
 
   return (
@@ -56,7 +73,7 @@ export default function MagneticButton({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="inline-block"
+      className="inline-block magnetic-button-wrap"
     >
       <Component
         href={href}

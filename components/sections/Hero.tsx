@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import MagneticButton from '@/components/ui/MagneticButton'
 import { LuminousPearl } from '@/components/three'
+import { useIsMobile } from '@/hooks/useMediaQuery'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -18,6 +19,7 @@ export default function Hero() {
   const subRef = useRef<HTMLParagraphElement>(null)
   const ctasRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     if (!sectionRef.current || !contentRef.current) return
@@ -82,14 +84,16 @@ export default function Hero() {
         )
       }
 
-      // Pin the hero content while scrolling
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: '+=100%',
-        pin: contentRef.current,
-        pinSpacing: true,
-      })
+      // Pin the hero content while scrolling (desktop only)
+      if (!isMobile) {
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: '+=100%',
+          pin: contentRef.current,
+          pinSpacing: true,
+        })
+      }
 
       // Parallax fade out on scroll
       gsap.to(contentRef.current, {
@@ -107,7 +111,7 @@ export default function Hero() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isMobile])
 
   return (
     <section

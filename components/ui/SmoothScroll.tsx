@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useIsMobile } from '@/hooks/useMediaQuery'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -11,19 +12,21 @@ if (typeof window !== 'undefined') {
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
+    // Mobile: lighter smooth scroll for better native feel
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: isMobile ? 0.8 : 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
+      touchMultiplier: isMobile ? 1.5 : 2,
     })
 
     lenisRef.current = lenis
 
-    // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)
 
     gsap.ticker.add((time) => {
@@ -36,7 +39,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       lenis.destroy()
       gsap.ticker.remove(lenis.raf as any)
     }
-  }, [])
+  }, [isMobile])
 
   return <>{children}</>
 }
