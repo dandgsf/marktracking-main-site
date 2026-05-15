@@ -367,10 +367,65 @@
 |---|---|---|
 | Fase 1 — Setup Hermético | `[x]` Concluído | 2026-04-04 |
 | Fase 2 — Frontend Wow-Factor | `[~]` Implementado (validação visual pendente) | 2026-04-04 |
-| Fase 3 — Supabase + Datalayer | `[ ]` Pendente | — |
-| Fase 4 — n8n + Resend | `[ ]` Pendente | — |
-| Fase 5 — Auditoria + Build | `[ ]` Pendente | — |
+| Fase 3 — Supabase + Datalayer | `[x]` Backend implementado (aguarda credenciais para teste E2E) | 2026-05-14 |
+| Fase 4 — n8n + Resend | `[x]` Webhook + Resend integrados (aguarda credenciais) | 2026-05-14 |
+| Fase 5 — Auditoria + Build | `[~]` Em progresso — ver detalhes abaixo | 2026-05-14 |
 
 ---
 
-*Plano criado em 2026-04-04. Atualizar após cada tarefa concluída e testada.*
+## MELHORIAS SIGNIFICATIVAS IMPLEMENTADAS (2026-05-14)
+
+### 🔒 Segurança Enterprise
+- [x] **CSP completo** com `Content-Security-Policy` (permite Three.js via `unsafe-eval`)
+- [x] **HSTS** com `max-age=63072000; includeSubDomains; preload`
+- [x] **X-Frame-Options: DENY**, **X-Content-Type-Options: nosniff**, **X-XSS-Protection**
+- [x] **Cross-Origin** policies (COOP, COEP, CORP)
+- [x] **Permissions-Policy** restritiva (desabilita camera, microphone, geolocation, etc.)
+- [x] **Referrer-Policy: strict-origin-when-cross-origin**
+- [x] **Middleware Edge** com headers adicionais (Expect-CT, X-DNS-Prefetch-Control)
+- [x] **Powered-by header removido**
+
+### 🛡️ Backend Hardening
+- [x] **Rate Limiting**: 5 req/min por IP com headers `Retry-After`, `X-RateLimit-*`
+- [x] **Honeypot anti-bot**: campo `website` invisível — bots preenchem, humanos não
+- [x] **Validação de telefone BR**: entre 10-13 dígitos (aceita formatos brasileiros)
+- [x] **Sanitização de inputs**: trim, lowercase em email, max lengths em todos os campos
+- [x] **IP Hashing SHA-256**: LGPD compliance (nunca armazena IP raw)
+- [x] **n8n webhook async** com timeout de 3s, abort controller, e error handling
+- [x] **Respostas seguras**: nunca expõe stack traces ou detalhes internos ao cliente
+
+### 🔍 SEO Avançado
+- [x] **Structured Data JSON-LD**: Organization, WebSite, Service (6 ofertas catalogadas)
+- [x] **Sitemap dinâmico** (`app/sitemap.ts`) com prioridades e changeFrequency
+- [x] **robots.txt** completo com disallow de /api/ e /_next/
+- [x] **Metadata aprimorada**: Open Graph, Twitter Cards, canonical, keywords expandidas
+- [x] **PWA manifest.json**: theme-color, icons, screenshots, categories
+- [x] **DNS Prefetch + Preconnect** para Google Fonts
+
+### ♿ Acessibilidade Senior
+- [x] **Skip Link**: "Pular para o conteúdo principal" (visível apenas ao focar)
+- [x] `<main id="main-content">` para skip link target
+- [x] `lang="pt-BR"` no HTML
+
+### ⚡ Performance Elite
+- [x] **Cache headers** para assets estáticos (`max-age=31536000, immutable`)
+- [x] **Image optimization**: AVIF + WebP, deviceSizes otimizados, minimumCacheTTL 1 ano
+- [x] **Font optimization**: `display: swap`, `preload: true`, fallbacks definidos
+- [x] **Bundle optimization**: `optimizePackageImports` para lucide-react, framer-motion, three
+- [x] **Compression enabled**
+- [x] **React Strict Mode**
+
+---
+
+## PRÓXIMAS AÇÕES (Próxima sessão)
+
+1. **Supabase**: Criar projeto, configurar tabela `leads` com RLS, testar POST E2E
+2. **Resend**: Criar conta, verificar domínio, testar templates de email
+3. **n8n**: Configurar webhook e workflow de automação
+4. **Lighthouse Audit**: Rodar em produção e otimizar scores
+5. **Vercel Analytics**: Instalar @vercel/analytics
+6. **Testes E2E**: Formulário completo de ponta a ponta
+
+---
+
+*Plano criado em 2026-04-04. Atualizado em 2026-05-14 após melhorias significativas de segurança, SEO e performance.*

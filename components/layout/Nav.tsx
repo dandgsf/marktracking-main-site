@@ -26,7 +26,6 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -36,53 +35,63 @@ export default function Nav() {
 
   return (
     <>
+      {/* Floating pill navbar */}
       <header
-        className={`glass-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'border-b border-white/10' : 'border-b border-transparent'
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          scrolled
+            ? 'bg-bg/80 backdrop-blur-2xl border border-border shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
+            : 'bg-transparent border border-transparent'
         }`}
+        style={{ borderRadius: '9999px' }}
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+        <nav className="flex items-center gap-1 px-2 py-2">
           {/* Logo */}
           <a
             href="#"
-            className="flex items-baseline gap-2 select-none"
+            className="flex items-center gap-2 px-4 py-2 select-none"
             aria-label="Marktracking — home"
           >
-            <span className="font-heading text-lg font-black tracking-[0.2em] text-glow-green">
-              MT
+            <span className="font-mono text-sm font-medium tracking-tight text-text-primary">
+              mt
             </span>
-            <span className="font-heading text-[0.65rem] font-semibold tracking-[0.25em] text-white/80 uppercase">
-              MARKTRACKING
+            <span className="w-px h-4 bg-border" />
+            <span className="text-[10px] font-medium tracking-[0.2em] text-text-tertiary uppercase">
+              Marktracking
             </span>
           </a>
 
           {/* Desktop links */}
-          <ul className="hidden items-center gap-8 md:flex" role="list">
+          <div className="hidden md:flex items-center gap-0.5">
             {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <DesktopNavLink href={link.href}>{link.label}</DesktopNavLink>
-              </li>
+              <DesktopNavLink key={link.href} href={link.href}>
+                {link.label}
+              </DesktopNavLink>
             ))}
-          </ul>
+          </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex">
+          <div className="hidden md:block pl-2">
             <a
               href="#contato"
-              className="font-body font-semibold tracking-wider text-sm text-neon-green border border-neon-green/50 px-5 py-2 rounded-lg transition-all duration-200 hover:border-neon-green hover:bg-neon-green/10 hover:shadow-[0_0_16px_rgba(0,255,157,0.25)]"
+              className="group relative inline-flex items-center gap-2 px-5 py-2.5 text-xs font-medium tracking-wide text-bg bg-text-primary rounded-full transition-all duration-300 hover:bg-text-secondary"
             >
-              Falar Agora
+              <span>Falar Agora</span>
+              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-bg/10 transition-transform duration-300 group-hover:translate-x-0.5">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="text-bg">
+                  <path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
             </a>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="flex md:hidden items-center justify-center text-white/70 hover:text-neon-green transition-colors"
+            className="flex md:hidden items-center justify-center p-2 text-text-secondary hover:text-text-primary transition-colors"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={mobileOpen}
           >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileOpen ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
           </button>
         </nav>
       </header>
@@ -95,10 +104,10 @@ export default function Nav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex flex-col bg-dark-bg/95 backdrop-blur-xl md:hidden"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 flex flex-col bg-bg/95 backdrop-blur-3xl md:hidden"
           >
-            <div className="flex-1 flex flex-col items-center justify-center gap-10">
+            <div className="flex-1 flex flex-col items-center justify-center gap-8">
               {NAV_LINKS.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -106,8 +115,8 @@ export default function Nav() {
                   onClick={closeMobile}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07, duration: 0.3 }}
-                  className="font-heading text-2xl font-semibold tracking-widest text-white/70 hover:text-glow-green transition-colors uppercase"
+                  transition={{ delay: i * 0.07, duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+                  className="text-2xl font-medium tracking-tight text-text-secondary hover:text-text-primary transition-colors"
                 >
                   {link.label}
                 </motion.a>
@@ -118,8 +127,8 @@ export default function Nav() {
                 onClick={closeMobile}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: NAV_LINKS.length * 0.07, duration: 0.3 }}
-                className="mt-4 font-body font-semibold tracking-wider text-base text-neon-green border border-neon-green/50 px-8 py-3 rounded-lg hover:bg-neon-green/10 hover:border-neon-green transition-all duration-200"
+                transition={{ delay: NAV_LINKS.length * 0.07, duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+                className="mt-4 px-8 py-3 text-sm font-medium tracking-wide text-bg bg-text-primary rounded-full hover:bg-text-secondary transition-colors"
               >
                 Falar Agora
               </motion.a>
@@ -132,22 +141,14 @@ export default function Nav() {
 }
 
 /* ---- Desktop nav link with animated underline ---- */
-
-interface DesktopNavLinkProps {
-  href: string
-  children: React.ReactNode
-}
-
-function DesktopNavLink({ href, children }: DesktopNavLinkProps) {
+function DesktopNavLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a
       href={href}
-      className="font-body font-medium tracking-wider text-sm text-white/70 hover:text-neon-green transition-colors relative group"
+      className="relative px-4 py-2 text-xs font-medium tracking-wide text-text-secondary hover:text-text-primary transition-colors duration-300 group"
     >
       {children}
-      <span
-        className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-neon-green transition-transform duration-300 group-hover:scale-x-100"
-      />
+      <span className="absolute bottom-1 left-4 right-4 h-px origin-center scale-x-0 bg-text-primary/50 transition-transform duration-300 group-hover:scale-x-100" />
     </a>
   )
 }

@@ -1,0 +1,20 @@
+# Robots.txt — Marktracking
+# https://marktracking.com.br/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://marktracking.com.br/sitemap.xml
+
+# Crawl rate suggestion
+Crawl-delay: 1
+
+# Disallow patterns
+Disallow: /api/
+Disallow: /_next/
+Disallow: /fonts/
+
+# Allow important assets
+Allow: /_next/static/
+Allow: /_next/image/

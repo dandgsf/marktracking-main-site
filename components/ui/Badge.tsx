@@ -1,13 +1,13 @@
 interface BadgeProps {
   children: React.ReactNode
-  color?: 'green' | 'blue' | 'white'
+  color?: 'green' | 'emerald' | 'white'
   className?: string
 }
 
 const colorClasses = {
-  green: 'text-neon-green bg-neon-green/10 border border-neon-green/30',
-  blue: 'text-neon-blue bg-neon-blue/10 border border-neon-blue/30',
-  white: 'text-white/70 bg-white/5 border border-white/10',
+  green: 'text-accent bg-accent-dim border border-accent/20',
+  emerald: 'text-accent-light bg-accent-dim border border-accent-light/20',
+  white: 'text-text-secondary bg-white/5 border border-border',
 }
 
 export default function Badge({ children, color = 'green', className = '' }: BadgeProps) {
@@ -15,7 +15,7 @@ export default function Badge({ children, color = 'green', className = '' }: Bad
     <span
       className={[
         'inline-flex items-center rounded-full px-3 py-1',
-        'font-heading text-xs uppercase tracking-wider',
+        'text-[10px] font-medium uppercase tracking-[0.15em]',
         colorClasses[color],
         className,
       ]

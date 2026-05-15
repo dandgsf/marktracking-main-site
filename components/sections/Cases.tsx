@@ -1,230 +1,167 @@
-"use client";
+'use client'
 
-import { useRef, useEffect, useState } from "react";
-import { useInView } from "framer-motion";
-import { Quote } from "lucide-react";
+import { useRef, useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { TopographicTerrain } from '@/components/three'
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface Metric {
-  prefix: string;
-  value: number;
-  suffix: string;
-  label: string;
-  color: "green" | "blue";
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
 }
 
-// ---------------------------------------------------------------------------
-// Data
-// ---------------------------------------------------------------------------
-
-const METRICS: Metric[] = [
+const CASES = [
   {
-    prefix: "+",
-    value: 340,
-    suffix: "%",
-    label: "aumento médio de ROAS",
-    color: "green",
+    tag: 'DevOps & Tracking',
+    title: 'De deploy no susto para releases semanais com dados confiáveis',
+    desc: 'Pipeline CI/CD com staging e produção separados, logs centralizados e instrumentação completa.',
+    metric: '+340%',
+    metricLabel: 'ROAS recuperado',
+    area: 'case-a',
   },
   {
-    prefix: "",
-    value: 0,
-    suffix: "",
-    label: "dados perdidos em produção",
-    color: "blue",
+    tag: 'Tracking & Growth',
+    title: 'Funil cego de vendas para visão do clique ao faturamento',
+    desc: 'Padronização de UTMs, eventos de conversão e dashboard único com CAC, LTV e payback por canal.',
+    metric: '0%',
+    metricLabel: 'dados perdidos',
+    area: 'case-b',
   },
   {
-    prefix: "",
-    value: 48,
-    suffix: "h",
-    label: "diagnóstico ao primeiro deploy",
-    color: "green",
+    tag: 'LP & Experimentação',
+    title: 'De LP feita no olho para otimização contínua guiada por dados',
+    desc: 'Tracking de scroll, cliques e formulário com testes A/B contínuos em headline, oferta e layout.',
+    metric: '48h',
+    metricLabel: 'para deploy',
+    area: 'case-c',
   },
-  {
-    prefix: "",
-    value: 100,
-    suffix: "%",
-    label: "LGPD compliance em todos os projetos",
-    color: "blue",
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Animated Counter
-// ---------------------------------------------------------------------------
-
-interface AnimatedCounterProps {
-  prefix: string;
-  target: number;
-  suffix: string;
-  color: "green" | "blue";
-  inView: boolean;
-  duration?: number;
-}
-
-function AnimatedCounter({
-  prefix,
-  target,
-  suffix,
-  color,
-  inView,
-  duration = 1500,
-}: AnimatedCounterProps) {
-  const [count, setCount] = useState(0);
-  const rafRef = useRef<number | null>(null);
-  const startTimeRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (!inView) return;
-
-    setCount(0);
-    startTimeRef.current = null;
-
-    const step = (timestamp: number) => {
-      if (startTimeRef.current === null) startTimeRef.current = timestamp;
-      const elapsed = timestamp - startTimeRef.current;
-      const t = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
-      const progress = 1 - Math.pow(1 - t, 3);
-      setCount(Math.round(progress * target));
-
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(step);
-      }
-    };
-
-    rafRef.current = requestAnimationFrame(step);
-
-    return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    };
-  }, [inView, target, duration]);
-
-  const glowClass =
-    color === "green" ? "text-glow-green" : "text-glow-blue";
-
-  return (
-    <span className={`font-heading text-4xl md:text-5xl ${glowClass}`}>
-      {prefix}
-      {count}
-      {suffix}
-    </span>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
+]
 
 export default function Cases() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const metricsRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null)
+  const cardsRef = useRef<HTMLDivElement>(null)
 
-  const metricsInView = useInView(metricsRef, { once: true, margin: "-80px" });
+  useEffect(() => {
+    if (!sectionRef.current || !cardsRef.current) return
+
+    const ctx = gsap.context(() => {
+      const cards = cardsRef.current!.querySelectorAll('.case-card')
+
+      cards.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
+
+        const metricEl = card.querySelector('.case-metric')
+        if (metricEl) {
+          gsap.fromTo(
+            metricEl,
+            { scale: 0.8, opacity: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.6,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 70%',
+                toggleActions: 'play none none none',
+              },
+            }
+          )
+        }
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section
-      id="cases"
       ref={sectionRef}
-      className="bg-dark-bg py-24 lg:py-32"
+      id="cases"
+      className="relative py-32 md:py-48 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <p
-            className="font-heading text-xs tracking-[0.3em] mb-5"
-            style={{ color: "rgba(0,255,157,0.6)" }}
-          >
-            RESULTADOS
-          </p>
-          <h2 className="font-heading text-4xl md:text-5xl text-white leading-tight mb-5">
-            Números que importam.
+      {/* 3D Topographic Terrain — Background */}
+      <div className="hidden lg:block absolute inset-0 opacity-40">
+        <TopographicTerrain />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+        {/* Header — Left aligned */}
+        <div className="mb-20 md:mb-28 max-w-3xl">
+          <span className="text-caption mb-6 block">Cases</span>
+          <h2 className="text-headline font-medium text-text-primary">
+            Menos slide bonito,
+            <br />
+            <span className="gradient-accent">mais stack funcionando.</span>
           </h2>
-          <p
-            className="font-body text-xl"
-            style={{ color: "rgba(255,255,255,0.6)" }}
-          >
-            Resultados reais de projetos reais.
-          </p>
         </div>
 
-        {/* Metrics grid */}
+        {/* Asymmetric Grid — No 3-equal-columns */}
         <div
-          ref={metricsRef}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+          ref={cardsRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-fr"
+          style={{
+            gridTemplateAreas: `
+              "case-a case-a case-b"
+              "case-c case-c case-c"
+            `,
+          }}
         >
-          {METRICS.map((metric) => (
+          {CASES.map((c) => (
             <div
-              key={metric.label}
-              className="glass p-8 flex flex-col items-center text-center"
+              key={c.title}
+              className="case-card group"
+              style={{ gridArea: c.area }}
             >
-              <AnimatedCounter
-                prefix={metric.prefix}
-                target={metric.value}
-                suffix={metric.suffix}
-                color={metric.color}
-                inView={metricsInView}
-              />
-              <p
-                className="font-body text-sm mt-3 leading-snug"
-                style={{ color: "rgba(255,255,255,0.5)" }}
+              <div
+                className="relative h-full rounded-[2rem] md:rounded-[2.5rem] border border-white/[0.06] bg-white/[0.02] p-8 md:p-10 flex flex-col transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.10]"
+                style={{
+                  boxShadow:
+                    '0 20px 40px -15px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.05)',
+                }}
               >
-                {metric.label}
-              </p>
+                {/* Tag */}
+                <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-text-muted mb-8 block">
+                  {c.tag}
+                </span>
+
+                {/* Content */}
+                <div className="flex-1">
+                  <h3 className="text-lg md:text-xl font-medium text-text-primary mb-4 leading-snug">
+                    {c.title}
+                  </h3>
+                  <p className="text-sm text-text-secondary leading-relaxed">
+                    {c.desc}
+                  </p>
+                </div>
+
+                {/* Metric */}
+                <div className="mt-10 pt-6 border-t border-white/[0.06]">
+                  <span className="case-metric text-4xl md:text-5xl font-medium text-text-primary block tracking-tight">
+                    {c.metric}
+                  </span>
+                  <span className="text-[10px] text-text-muted uppercase tracking-[0.15em] mt-2 block">
+                    {c.metricLabel}
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
-
-        {/* Testimonial card */}
-        <div className="glass p-8 md:p-10">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
-            {/* Left: quote */}
-            <div className="flex-1 min-w-0">
-              <Quote
-                size={32}
-                className="mb-4"
-                style={{ color: "rgba(0,255,157,0.4)" }}
-              />
-              <blockquote
-                className="font-body text-lg md:text-xl leading-relaxed mb-5"
-                style={{ color: "rgba(255,255,255,0.8)" }}
-              >
-                "Em 30 dias, o Marktracking identificou que estávamos perdendo
-                23% das conversões no checkout. Corrigimos, e o ROAS subiu 340%
-                no trimestre."
-              </blockquote>
-              <p
-                className="font-heading text-xs tracking-widest"
-                style={{ color: "rgba(255,255,255,0.35)" }}
-              >
-                — Head of Growth, E-commerce B2C (varejo digital)
-              </p>
-            </div>
-
-            {/* Right: visual accent */}
-            <div
-              className="flex-shrink-0 flex flex-col items-center justify-center rounded-2xl px-6 py-6 sm:px-8 overflow-hidden"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(0,255,157,0.08) 0%, rgba(0,240,255,0.04) 100%)",
-                border: "1px solid rgba(0,255,157,0.15)",
-              }}
-            >
-              <span className="text-glow-green font-heading text-3xl sm:text-4xl lg:text-5xl leading-none whitespace-nowrap">
-                +340%
-              </span>
-              <span
-                className="font-body text-xs sm:text-sm mt-2 text-center"
-                style={{ color: "rgba(255,255,255,0.4)" }}
-              >
-                ROAS
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
-  );
+  )
 }

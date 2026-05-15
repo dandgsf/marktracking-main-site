@@ -8,16 +8,18 @@ export default function Card({ children, className = '', hover = false }: CardPr
   return (
     <div
       className={[
-        'glass',
+        'bezel-outer',
         hover
-          ? 'transition-all duration-300 hover:-translate-y-1 hover:border-glow cursor-pointer'
+          ? 'transition-all duration-500 hover:bg-white/[0.06] cursor-pointer'
           : '',
         className,
       ]
         .filter(Boolean)
         .join(' ')}
     >
-      {children}
+      <div className="bezel-inner">
+        {children}
+      </div>
     </div>
   )
 }

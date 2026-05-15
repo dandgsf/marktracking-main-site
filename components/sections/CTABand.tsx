@@ -1,106 +1,84 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
+import { useRef, useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import MagneticButton from '@/components/ui/MagneticButton'
 
-// ---------------------------------------------------------------------------
-// Shimmer Button
-// ---------------------------------------------------------------------------
-
-function ShimmerButton() {
-  return (
-    <motion.a
-      href="#contato"
-      className="inline-block rounded-lg font-heading font-bold text-lg px-10 py-5 text-black relative overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(90deg, #00ff9d 0%, #00f0ff 50%, #00ff9d 100%)",
-        backgroundSize: "200% 100%",
-        animation: "shimmer-btn 2.5s linear infinite",
-      }}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring" as const, stiffness: 400, damping: 25 }}
-    >
-      Falar com Especialista →
-    </motion.a>
-  );
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
 }
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
 export default function CTABand() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.cta-content',
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
-      id="cta"
-      className="relative py-20 overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, #050505 0%, #0a0a0a 50%, #050505 100%)",
-        borderTop: "1px solid rgba(0,255,157,0.2)",
-        borderBottom: "1px solid rgba(0,255,157,0.2)",
-      }}
+      ref={sectionRef}
+      className="relative py-32 md:py-48 overflow-hidden"
     >
-      {/* Radial glow overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(0,255,157,0.08) 0%, transparent 70%)",
-        }}
-      />
+      {/* Background gradient */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            background: 'radial-gradient(ellipse 80% 60% at 50% 50%, #22c55e, transparent)',
+          }}
+        />
+      </div>
 
-      {/* Subtle grid texture */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        aria-hidden="true"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(0,255,157,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,157,1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative max-w-4xl mx-auto px-6 text-center">
-        {/* Eyebrow */}
-        <p
-          className="font-heading text-xs tracking-[0.4em] mb-6"
-          style={{ color: "rgba(0,255,157,0.6)" }}
-        >
-          PRONTO PARA CRESCER?
-        </p>
-
-        {/* Heading */}
-        <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6">
-          Dados precisos.{" "}
-          <span className="text-glow-green">Decisões melhores.</span>
+      <div className="cta-content max-w-4xl mx-auto px-6 md:px-12 text-center">
+        <span className="text-caption mb-8 block">Vamos conversar</span>
+        
+        <h2 className="text-headline font-medium text-text-primary mb-6">
+          Sua stack está quebrando
+          <br />
+          <span className="gradient-accent">e você ainda não sabe onde.</span>
         </h2>
 
-        {/* Sub */}
-        <p
-          className="font-body text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
-          style={{ color: "rgba(255,255,255,0.6)" }}
-        >
-          Agende uma conversa gratuita com nossos especialistas e descubra
-          quanto dado você está perdendo agora.
+        <p className="text-body max-w-xl mx-auto mb-12">
+          Agende uma call de 30 minutos. Sem pitch de vendas, só diagnóstico técnico 
+          do seu cenário atual.
         </p>
 
-        {/* CTA Button */}
-        <div className="mb-6">
-          <ShimmerButton />
-        </div>
-
-        {/* Trust line */}
-        <p
-          className="font-body text-sm"
-          style={{ color: "rgba(255,255,255,0.3)" }}
+        <MagneticButton
+          href="#contato"
+          className="group relative px-10 py-5 text-sm font-medium text-bg bg-text-primary rounded-full transition-all duration-500 hover:bg-text-secondary"
         >
-          Sem compromisso · Diagnóstico gratuito · Resposta em 24h
-        </p>
+          <span className="inline-flex items-center gap-3">
+            <span>Agendar diagnóstico gratuito</span>
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-bg/10 transition-transform duration-300 group-hover:translate-x-0.5">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-bg">
+                <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </span>
+        </MagneticButton>
       </div>
     </section>
-  );
+  )
 }
