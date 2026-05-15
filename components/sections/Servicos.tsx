@@ -112,10 +112,10 @@ export default function Servicos() {
           </p>
         </div>
 
-        {/* Bento 2.0 Grid — Asymmetric */}
+        {/* Bento 2.0 Grid — Asymmetric (desktop only) */}
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-fr"
+          className="bento-grid-mobile grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-fr"
           style={{
             gridTemplateAreas: `
               "tracking tracking devops"

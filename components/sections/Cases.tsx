@@ -112,7 +112,7 @@ export default function Cases() {
         {/* Asymmetric Grid — No 3-equal-columns */}
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-fr"
+          className="bento-grid-mobile grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-fr"
           style={{
             gridTemplateAreas: `
               "case-a case-a case-b"
