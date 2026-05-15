@@ -1,153 +1,211 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-import { motion } from 'framer-motion'
+import { useRef, useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import MagneticButton from '@/components/ui/MagneticButton'
+import { LuminousPearl } from '@/components/three'
 
-// ---------------------------------------------------------------------------
-// Lazy-load the Three.js canvas — SSR disabled, no blocking fallback
-// ---------------------------------------------------------------------------
-const ParticleField = dynamic(
-  () => import('@/components/three/ParticleField'),
-  { ssr: false, loading: () => null }
-)
-
-// ---------------------------------------------------------------------------
-// Reusable animation variants (defined at module level — never re-allocated)
-// ---------------------------------------------------------------------------
-const FADE_UP_INITIAL = { opacity: 0, y: 30 }
-const FADE_UP_ANIMATE = { opacity: 1, y: 0 }
-
-const TRANSITION_BASE = {
-  duration: 0.7,
-  ease: [0.25, 0.46, 0.45, 0.94] as const,
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
 }
 
-function fadeUp(delay: number) {
-  return {
-    initial: FADE_UP_INITIAL,
-    animate: FADE_UP_ANIMATE,
-    transition: { ...TRANSITION_BASE, delay },
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Sub-components (defined outside Hero to prevent inline-component issue)
-// ---------------------------------------------------------------------------
-
-function ScrollIndicator() {
-  return (
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-      <span className="font-heading text-xs tracking-[0.3em] text-white/30 uppercase select-none">
-        Scroll
-      </span>
-      {/* Animated chevron */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-        aria-hidden="true"
-      >
-        <svg
-          width="16"
-          height="10"
-          viewBox="0 0 16 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="text-white/30"
-        >
-          <path
-            d="M1 1L8 8L15 1"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.div>
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// Hero section
-// ---------------------------------------------------------------------------
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const eyebrowRef = useRef<HTMLDivElement>(null)
+  const headlineRef = useRef<HTMLHeadingElement>(null)
+  const subRef = useRef<HTMLParagraphElement>(null)
+  const ctasRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!sectionRef.current || !contentRef.current) return
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+
+      // Eyebrow
+      if (eyebrowRef.current) {
+        tl.fromTo(
+          eyebrowRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          0.1
+        )
+      }
+
+      // Headline word-by-word
+      if (headlineRef.current) {
+        const words = headlineRef.current.querySelectorAll('.word')
+        tl.fromTo(
+          words,
+          { y: 100, opacity: 0, rotateX: -40 },
+          {
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
+            duration: 1.2,
+            stagger: 0.08,
+          },
+          0.3
+        )
+      }
+
+      // Sub-headline
+      if (subRef.current) {
+        tl.fromTo(
+          subRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          0.8
+        )
+      }
+
+      // CTAs
+      if (ctasRef.current) {
+        tl.fromTo(
+          ctasRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          1.0
+        )
+      }
+
+      // Scroll indicator
+      if (scrollRef.current) {
+        tl.fromTo(
+          scrollRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1 },
+          1.5
+        )
+      }
+
+      // Pin the hero content while scrolling
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: '+=100%',
+        pin: contentRef.current,
+        pinSpacing: true,
+      })
+
+      // Parallax fade out on scroll
+      gsap.to(contentRef.current, {
+        opacity: 0,
+        y: -80,
+        scale: 0.95,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: '+=80%',
+          scrub: 0.8,
+        },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
-      className="relative overflow-hidden flex flex-col"
-      style={{ minHeight: '100svh' }}
+      ref={sectionRef}
+      className="relative min-h-[100dvh] flex items-center overflow-hidden"
       aria-label="Hero"
     >
-      {/* ── Background canvas ─────────────────────────────────────────── */}
-      <div className="absolute inset-0 z-0" aria-hidden="true">
-        <ParticleField />
+      {/* 3D Pearl — Right side background */}
+      <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[50%] h-[80%]">
+        <LuminousPearl />
       </div>
 
-      {/* ── Ambient radial glow ────────────────────────────────────────── */}
+      {/* ── Content — Left aligned (Anti-Center) ─────────────────────────── */}
       <div
-        className="absolute inset-0 z-[1] pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, rgba(0,255,157,0.05) 0%, transparent 70%)',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* ── Content ────────────────────────────────────────────────────── */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-24 text-center">
-        {/* Badge */}
-        <motion.div {...fadeUp(0.3)}>
-          <span className="font-heading text-xs tracking-[0.3em] text-neon-green/80 uppercase mb-6 block">
+        ref={contentRef}
+        className="relative z-10 flex flex-col items-start text-left px-6 md:px-12 max-w-7xl mx-auto w-full"
+      >
+        {/* Eyebrow tag */}
+        <div ref={eyebrowRef} className="mb-8 opacity-0">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-bg-elevated/50 text-[10px] font-mono tracking-[0.15em] uppercase text-text-tertiary">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-subtle" />
             Performance Solutions
           </span>
-        </motion.div>
+        </div>
 
-        {/* Headline */}
-        <motion.h1
-          className="font-heading text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-white md:text-7xl lg:text-8xl"
-          {...fadeUp(0.5)}
+        {/* Headline with word-by-word reveal */}
+        <h1
+          ref={headlineRef}
+          className="text-display font-medium text-text-primary max-w-5xl"
+          style={{ perspective: '1000px' }}
         >
-          TRACKING QUE
-          <br />
-          {/* "CONVERTE" gets the glitch animation */}
-          <span className="animate-glitch inline-block text-glow-green">
-            CONVERTE.
-          </span>
-        </motion.h1>
+          <span className="word inline-block">Arquitetura</span>{' '}
+          <span className="word inline-block">de</span>{' '}
+          <span className="word inline-block gradient-accent">dados</span>
+          <br className="hidden sm:block" />
+          <span className="word inline-block">para</span>{' '}
+          <span className="word inline-block">produtos</span>{' '}
+          <span className="word inline-block">que</span>
+          <br className="hidden sm:block" />
+          <span className="word inline-block">precisam</span>{' '}
+          <span className="word inline-block gradient-accent">escalar.</span>
+        </h1>
 
         {/* Sub-headline */}
-        <motion.p
-          className="font-body mt-6 max-w-2xl text-lg leading-relaxed text-white/70 md:text-xl"
-          {...fadeUp(0.7)}
+        <p
+          ref={subRef}
+          className="mt-8 max-w-xl text-body opacity-0"
         >
-          Arquitetura de dados robusta para produtos digitais que precisam crescer
-          sem perder medições.
-        </motion.p>
+          DevOps, tracking avançado e growth analytics. Sem dashboards bonitos que ninguém usa. 
+          Sistemas que capturam, entendem e convertem.
+        </p>
 
         {/* CTAs */}
-        <motion.div
-          className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-          {...fadeUp(0.9)}
+        <div
+          ref={ctasRef}
+          className="mt-12 flex flex-col sm:flex-row items-start gap-4 opacity-0"
         >
-          {/* Primary CTA */}
-          <a
-            href="#contact"
-            className="font-heading inline-flex items-center justify-center rounded-lg bg-neon-green px-8 py-4 text-sm font-bold tracking-wide text-black transition-all duration-200 hover:brightness-110 hover:shadow-[0_0_24px_rgba(0,255,157,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon-green"
+          {/* Primary CTA — Magnetic */}
+          <MagneticButton
+            href="#contato"
+            className="group relative px-8 py-4 text-sm font-medium text-bg bg-text-primary rounded-full transition-all duration-500 hover:bg-text-secondary"
           >
-            Falar com Especialista
-          </a>
+            <span className="inline-flex items-center gap-3">
+              <span>Agendar diagnóstico gratuito</span>
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-bg/10 transition-transform duration-300 group-hover:translate-x-0.5">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-bg">
+                  <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </span>
+          </MagneticButton>
 
-          {/* Ghost CTA */}
+          {/* Secondary CTA */}
           <a
-            href="#services"
-            className="font-heading inline-flex items-center justify-center rounded-lg border border-neon-green/50 px-8 py-4 text-sm font-bold tracking-wide text-neon-green transition-all duration-200 hover:border-neon-green/80 hover:bg-neon-green/5 hover:shadow-[0_0_16px_rgba(0,255,157,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon-green"
+            href="#servicos"
+            className="inline-flex items-center gap-2 px-8 py-4 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-300"
           >
-            Ver Serviços
+            <span>Ver serviços</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="opacity-50">
+              <path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </a>
-        </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div
+          ref={scrollRef}
+          className="absolute bottom-12 left-6 md:left-12 flex flex-col items-start gap-3 opacity-0"
+        >
+          <span className="text-[10px] tracking-[0.3em] uppercase text-text-muted select-none">
+            Scroll
+          </span>
+          <div
+            className="w-px h-8 bg-gradient-to-b from-text-muted to-transparent scroll-bounce"
+            aria-hidden="true"
+          />
+        </div>
       </div>
-
-      {/* ── Scroll indicator ───────────────────────────────────────────── */}
-      <ScrollIndicator />
     </section>
   )
 }

@@ -22,18 +22,18 @@ interface Ripple {
 }
 
 const sizeClasses = {
-  sm: 'px-4 py-2 text-sm',
-  md: 'px-6 py-3 text-base',
-  lg: 'px-8 py-4 text-lg',
+  sm: 'px-4 py-2 text-xs',
+  md: 'px-6 py-3 text-sm',
+  lg: 'px-8 py-4 text-sm',
 }
 
 const variantClasses = {
   primary:
-    'bg-neon-green text-black font-bold border border-neon-green hover:shadow-[0_0_20px_rgba(0,255,157,0.5),0_0_40px_rgba(0,255,157,0.2)]',
+    'bg-text-primary text-bg font-medium hover:bg-text-secondary',
   ghost:
-    'bg-transparent text-neon-green border border-neon-green hover:bg-neon-green/10',
+    'bg-transparent text-text-secondary border border-border hover:bg-white/5 hover:text-text-primary',
   danger:
-    'bg-transparent text-red-400 border border-red-500 hover:bg-red-500/10',
+    'bg-transparent text-red-400 border border-red-500/30 hover:bg-red-500/10',
 }
 
 export default function Button({
@@ -71,10 +71,10 @@ export default function Button({
   }
 
   const baseClasses = [
-    'relative overflow-hidden inline-flex items-center justify-center',
-    'rounded-lg font-heading tracking-wider uppercase',
-    'transition-colors duration-200 select-none outline-none',
-    'focus-visible:ring-2 focus-visible:ring-neon-green/50 focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg',
+    'relative overflow-hidden inline-flex items-center justify-center gap-2',
+    'rounded-full font-medium',
+    'transition-all duration-300 select-none outline-none',
+    'focus-visible:ring-2 focus-visible:ring-text-tertiary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-bg',
     sizeClasses[size],
     variantClasses[variant],
     disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
@@ -83,10 +83,10 @@ export default function Button({
 
   const rippleColor =
     variant === 'primary'
-      ? 'rgba(0,0,0,0.25)'
+      ? 'rgba(0,0,0,0.15)'
       : variant === 'danger'
-        ? 'rgba(239,68,68,0.3)'
-        : 'rgba(0,255,157,0.2)'
+        ? 'rgba(239,68,68,0.2)'
+        : 'rgba(255,255,255,0.1)'
 
   const content = loading ? (
     <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -95,9 +95,9 @@ export default function Button({
   )
 
   const motionProps = {
-    whileHover: disabled || loading ? {} : { scale: 1.03 },
-    whileTap: disabled || loading ? {} : { scale: 0.97 },
-    transition: { type: 'spring' as const, stiffness: 400, damping: 20 },
+    whileHover: disabled || loading ? {} : { scale: 1.02 },
+    whileTap: disabled || loading ? {} : { scale: 0.98 },
+    transition: { type: 'spring' as const, stiffness: 400, damping: 25 },
   }
 
   if (href) {
@@ -113,7 +113,7 @@ export default function Button({
         {ripples.map((r) => (
           <span
             key={r.id}
-            className="absolute pointer-events-none rounded-full animate-ping"
+            className="absolute pointer-events-none rounded-full"
             style={{
               left: r.x,
               top: r.y,

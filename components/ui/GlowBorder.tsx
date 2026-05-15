@@ -12,15 +12,15 @@ export default function GlowBorder({ children, className = '', active = true }: 
         className={[
           'absolute inset-0 rounded-xl',
           active
-            ? 'bg-gradient-to-r from-neon-green via-neon-blue to-neon-green bg-[length:200%_100%] animate-shimmer'
-            : 'bg-white/10',
+            ? 'bg-gradient-to-r from-accent via-accent-light to-accent bg-[length:200%_100%] animate-shimmer'
+            : 'bg-border',
         ]
           .filter(Boolean)
           .join(' ')}
         aria-hidden="true"
       />
       {/* Inner content on dark background */}
-      <div className="relative rounded-[11px] bg-dark-bg">
+      <div className="relative rounded-[11px] bg-bg">
         {children}
       </div>
     </div>

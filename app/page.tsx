@@ -1,3 +1,5 @@
+'use client'
+
 import Hero from "@/components/sections/Hero";
 import Sobre from "@/components/sections/Sobre";
 import Servicos from "@/components/sections/Servicos";
@@ -8,7 +10,7 @@ import Contato from "@/components/sections/Contato";
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="relative">
       <Hero />
       <Sobre />
       <Servicos />

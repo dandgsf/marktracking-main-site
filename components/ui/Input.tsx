@@ -36,12 +36,12 @@ export default function Input({ label, error, className = '', ...rest }: InputPr
         }}
         placeholder=""
         className={[
-          'peer w-full rounded-lg bg-dark-elevated px-4 pt-6 pb-2',
-          'text-base text-white outline-none transition-all duration-200',
+          'peer w-full rounded-xl bg-bg-elevated px-4 pt-6 pb-2',
+          'text-sm text-text-primary outline-none transition-all duration-300',
           'border',
           error
-            ? 'border-red-500 focus:border-red-500 focus:shadow-[0_0_0_3px_rgba(239,68,68,0.15)]'
-            : 'border-white/10 focus:border-neon-green focus:shadow-[0_0_0_3px_rgba(0,255,157,0.12)]',
+            ? 'border-red-500/30 focus:border-red-500/50 focus:ring-1 focus:ring-red-500/20'
+            : 'border-border focus:border-text-tertiary focus:ring-1 focus:ring-text-tertiary/20',
           'disabled:cursor-not-allowed disabled:opacity-50',
           className,
         ]
@@ -51,10 +51,10 @@ export default function Input({ label, error, className = '', ...rest }: InputPr
       <label
         htmlFor={id}
         className={[
-          'pointer-events-none absolute left-4 font-body transition-all duration-200',
+          'pointer-events-none absolute left-4 transition-all duration-300',
           isFloating
-            ? 'top-2 text-xs text-neon-green/80'
-            : 'top-1/2 -translate-y-1/2 text-base text-white/40',
+            ? 'top-2 text-[10px] text-text-tertiary'
+            : 'top-1/2 -translate-y-1/2 text-sm text-text-muted',
         ]
           .filter(Boolean)
           .join(' ')}
@@ -62,7 +62,7 @@ export default function Input({ label, error, className = '', ...rest }: InputPr
         {label}
       </label>
       {error && (
-        <p className="mt-1 text-sm text-red-400" role="alert">
+        <p className="mt-1.5 text-xs text-red-400/80" role="alert">
           {error}
         </p>
       )}
